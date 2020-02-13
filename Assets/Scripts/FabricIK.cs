@@ -25,7 +25,22 @@ public class FabricIK : MonoBehaviour
         jointsLength = new float[chainLength];
         totalLength = 0.0f;
 
+        var current = this.transform;
+        for(int i = joints.Length - 1; i >= 0; i--)
+        {
+            joints[i] = current;
 
+            if (i == joints.Length - 1)
+            {
+
+            } else
+            {
+                jointsLength[i] = (joints[i + 1].position - joints[i].position).magnitude;
+                totalLength += jointsLength[i];
+            }
+
+            current = current.parent;
+        }
     }
 
     public void OnDrawGizmos()

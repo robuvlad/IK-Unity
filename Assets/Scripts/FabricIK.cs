@@ -65,7 +65,7 @@ public class FabricIK : MonoBehaviour
 
         if ((target.position - joints[0].position).sqrMagnitude >= totalLength * totalLength)
         {
-            var direction = (target.position - joints[0].position).normalized;
+            var direction = (target.position - positions[0]).normalized;
             for(int i = 1; i < joints.Length; i++)
             {
                 positions[i] = direction * jointsLength[i - 1] + positions[i - 1];
@@ -75,16 +75,20 @@ public class FabricIK : MonoBehaviour
             for(int i = 0; i < iterations; i++)
             {
                 //back
-                for(int j = positions.Length - 1; j >= 0; j--)
+                for(int j = positions.Length - 1; j > 0; j--)
                 {
                     if (j == positions.Length - 1)
                         positions[j] = target.position;
                     else
-                        positions[j] = (positions[j + 1] - positions[j]).normalized * jointsLength[j] + positions[j + 1];
+                        positions[j] = (positions[j] - positions[j + 1]).normalized * jointsLength[j] + positions[j + 1];
                 }
 
+                //forward
+                for (int j = 1; j < positions.Length; j++)
+                    positions[j] = (positions[j] - positions[j - 1]).normalized * jointsLength[j - 1] + positions[j - 1];
+
                 //close enough
-                if ((target.position - joints[joints.Length - 1].position).sqrMagnitude < epsilon * epsilon)
+                if ((positions[positions.Length - 1] - target.position).sqrMagnitude < epsilon * epsilon)
                     break;
             }
         }

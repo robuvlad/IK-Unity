@@ -7,6 +7,8 @@ public class FabricIK : MonoBehaviour
 {
     [SerializeField] int chainLength = 3;
     [SerializeField] Transform target;
+    [SerializeField] int iterations = 10;
+    [SerializeField] float epsilon = 0.001f;
 
     private Transform[] joints;
     private Vector3[] positions;
@@ -18,7 +20,12 @@ public class FabricIK : MonoBehaviour
         Init();
     }
 
-    public void Init()
+    void LateUpdate()
+    {
+        ResolveIK();
+    }
+
+    private void Init()
     {
         joints = new Transform[chainLength + 1];
         positions = new Vector3[chainLength + 1];
@@ -40,6 +47,51 @@ public class FabricIK : MonoBehaviour
             }
 
             current = current.parent;
+        }
+    }
+
+    private void ResolveIK()
+    {
+        if (target == null)
+            return;
+
+        if (chainLength != joints.Length)
+            Init();
+
+        for(int i = 0; i < joints.Length; i++)
+        {
+            positions[i] = joints[i].position;
+        }
+
+        if ((target.position - joints[0].position).sqrMagnitude >= totalLength * totalLength)
+        {
+            var direction = (target.position - joints[0].position).normalized;
+            for(int i = 1; i < joints.Length; i++)
+            {
+                positions[i] = direction * jointsLength[i - 1] + positions[i - 1];
+            }
+        } else
+        {
+            for(int i = 0; i < iterations; i++)
+            {
+                //back
+                for(int j = positions.Length - 1; j >= 0; j--)
+                {
+                    if (j == positions.Length - 1)
+                        positions[j] = target.position;
+                    else
+                        positions[j] = (positions[j + 1] - positions[j]).normalized * jointsLength[j] + positions[j + 1];
+                }
+
+                //close enough
+                if ((target.position - joints[joints.Length - 1].position).sqrMagnitude < epsilon * epsilon)
+                    break;
+            }
+        }
+
+        for(int i = 0; i < positions.Length; i++)
+        {
+            joints[i].position = positions[i];
         }
     }
 

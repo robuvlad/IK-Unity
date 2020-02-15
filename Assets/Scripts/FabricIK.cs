@@ -97,6 +97,23 @@ public class FabricIK : MonoBehaviour
         {
             joints[i].position = positions[i];
         }
+
+        for(int i = joints.Length - 1; i >= 0; i--)
+        {
+            if (i == joints.Length - 1)
+            {
+
+            } else if (i == joints.Length - 2)
+            {
+                joints[i].LookAt(target.position);
+            } else
+            {
+                joints[i].LookAt(target.position);
+            }
+        }
+
+
+
     }
 
     public void OnDrawGizmos()

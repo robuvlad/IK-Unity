@@ -15,6 +15,11 @@ public class FabricIK : MonoBehaviour
     private float[] jointsLength;
     private float totalLength;
 
+    protected Vector3[] StartDirectionSucc;
+    protected Quaternion[] StartRotationBone;
+    protected Quaternion StartRotationTarget;
+    protected Quaternion StartRotationRoot;
+
     void Awake()
     {
         Init();
@@ -32,16 +37,22 @@ public class FabricIK : MonoBehaviour
         jointsLength = new float[chainLength];
         totalLength = 0.0f;
 
+        StartDirectionSucc = new Vector3[chainLength + 1];
+        StartRotationBone = new Quaternion[chainLength + 1];
+        StartRotationTarget = target.rotation;
+
         var current = this.transform;
         for(int i = joints.Length - 1; i >= 0; i--)
         {
             joints[i] = current;
+            StartRotationBone[i] = current.rotation;
 
             if (i == joints.Length - 1)
             {
-
+                StartDirectionSucc[i] = target.position - current.position;
             } else
             {
+                StartDirectionSucc[i] = joints[i + 1].position - current.position;
                 jointsLength[i] = (joints[i + 1].position - joints[i].position).magnitude;
                 totalLength += jointsLength[i];
             }
@@ -62,6 +73,9 @@ public class FabricIK : MonoBehaviour
         {
             positions[i] = joints[i].position;
         }
+
+        var rootRot = (joints[0].parent != null) ? joints[0].parent.rotation : Quaternion.identity;
+        var rootRotDiff = rootRot * Quaternion.Inverse(StartRotationRoot);
 
         if ((target.position - joints[0].position).sqrMagnitude >= totalLength * totalLength)
         {
@@ -93,27 +107,14 @@ public class FabricIK : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < positions.Length; i++)
+        for (int i = 0; i < positions.Length; i++)
         {
+            if (i == positions.Length - 1)
+                joints[i].rotation = target.rotation * Quaternion.Inverse(StartRotationTarget) * StartRotationBone[i];
+            else
+                joints[i].rotation = Quaternion.FromToRotation(StartDirectionSucc[i], positions[i + 1] - positions[i]) * StartRotationBone[i];
             joints[i].position = positions[i];
         }
-
-        for(int i = joints.Length - 1; i >= 0; i--)
-        {
-            if (i == joints.Length - 1)
-            {
-
-            } else if (i == joints.Length - 2)
-            {
-                joints[i].LookAt(target.position);
-            } else
-            {
-                joints[i].LookAt(target.position);
-            }
-        }
-
-
-
     }
 
     public void OnDrawGizmos()

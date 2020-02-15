@@ -15,10 +15,9 @@ public class FabricIK : MonoBehaviour
     private float[] jointsLength;
     private float totalLength;
 
-    protected Vector3[] StartDirectionSucc;
-    protected Quaternion[] StartRotationBone;
-    protected Quaternion StartRotationTarget;
-    protected Quaternion StartRotationRoot;
+    private Vector3[] directions;
+    private Quaternion[] rotations;
+    private Quaternion rotationTarget;
 
     void Awake()
     {
@@ -37,22 +36,22 @@ public class FabricIK : MonoBehaviour
         jointsLength = new float[chainLength];
         totalLength = 0.0f;
 
-        StartDirectionSucc = new Vector3[chainLength + 1];
-        StartRotationBone = new Quaternion[chainLength + 1];
-        StartRotationTarget = target.rotation;
+        directions = new Vector3[chainLength + 1];
+        rotations = new Quaternion[chainLength + 1];
+        rotationTarget = target.rotation;
 
         var current = this.transform;
         for(int i = joints.Length - 1; i >= 0; i--)
         {
             joints[i] = current;
-            StartRotationBone[i] = current.rotation;
+            rotations[i] = current.rotation;
 
             if (i == joints.Length - 1)
             {
-                StartDirectionSucc[i] = target.position - current.position;
+                directions[i] = target.position - current.position;
             } else
             {
-                StartDirectionSucc[i] = joints[i + 1].position - current.position;
+                directions[i] = joints[i + 1].position - current.position;
                 jointsLength[i] = (joints[i + 1].position - joints[i].position).magnitude;
                 totalLength += jointsLength[i];
             }
@@ -69,50 +68,68 @@ public class FabricIK : MonoBehaviour
         if (chainLength != joints.Length)
             Init();
 
-        for(int i = 0; i < joints.Length; i++)
-        {
-            positions[i] = joints[i].position;
-        }
-
-        var rootRot = (joints[0].parent != null) ? joints[0].parent.rotation : Quaternion.identity;
-        var rootRotDiff = rootRot * Quaternion.Inverse(StartRotationRoot);
+        SetPositions();
 
         if ((target.position - joints[0].position).sqrMagnitude >= totalLength * totalLength)
         {
-            var direction = (target.position - positions[0]).normalized;
-            for(int i = 1; i < joints.Length; i++)
-            {
-                positions[i] = direction * jointsLength[i - 1] + positions[i - 1];
-            }
+            SetPositionsIfGreater();
         } else
         {
-            for(int i = 0; i < iterations; i++)
-            {
-                //back
-                for(int j = positions.Length - 1; j > 0; j--)
-                {
-                    if (j == positions.Length - 1)
-                        positions[j] = target.position;
-                    else
-                        positions[j] = (positions[j] - positions[j + 1]).normalized * jointsLength[j] + positions[j + 1];
-                }
-
-                //forward
-                for (int j = 1; j < positions.Length; j++)
-                    positions[j] = (positions[j] - positions[j - 1]).normalized * jointsLength[j - 1] + positions[j - 1];
-
-                //close enough
-                if ((positions[positions.Length - 1] - target.position).sqrMagnitude < epsilon * epsilon)
-                    break;
-            }
+            ResolveBackwardsForwards();
         }
 
+        SetJoints();
+    }
+
+
+    private void SetPositionsIfGreater()
+    {
+        var direction = (target.position - positions[0]).normalized;
+        for (int i = 1; i < joints.Length; i++)
+        {
+            positions[i] = direction * jointsLength[i - 1] + positions[i - 1];
+        }
+    }
+
+    private void ResolveBackwardsForwards()
+    {
+        for (int i = 0; i < iterations; i++)
+        {
+            //back
+            for (int j = positions.Length - 1; j > 0; j--)
+            {
+                if (j == positions.Length - 1)
+                    positions[j] = target.position;
+                else
+                    positions[j] = (positions[j] - positions[j + 1]).normalized * jointsLength[j] + positions[j + 1];
+            }
+
+            //forward
+            for (int j = 1; j < positions.Length; j++)
+                positions[j] = (positions[j] - positions[j - 1]).normalized * jointsLength[j - 1] + positions[j - 1];
+
+            //close enough
+            if ((positions[positions.Length - 1] - target.position).sqrMagnitude < epsilon * epsilon)
+                break;
+        }
+    }
+
+    private void SetPositions()
+    {
+        for (int i = 0; i < joints.Length; i++)
+        {
+            positions[i] = joints[i].position;
+        }
+    }
+
+    private void SetJoints()
+    {
         for (int i = 0; i < positions.Length; i++)
         {
             if (i == positions.Length - 1)
-                joints[i].rotation = target.rotation * Quaternion.Inverse(StartRotationTarget) * StartRotationBone[i];
+                joints[i].rotation = target.rotation * Quaternion.Inverse(rotationTarget) * rotations[i];
             else
-                joints[i].rotation = Quaternion.FromToRotation(StartDirectionSucc[i], positions[i + 1] - positions[i]) * StartRotationBone[i];
+                joints[i].rotation = Quaternion.FromToRotation(directions[i], positions[i + 1] - positions[i]) * rotations[i];
             joints[i].position = positions[i];
         }
     }

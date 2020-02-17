@@ -6,7 +6,7 @@ using UnityEngine;
 public class FabricIK : MonoBehaviour
 {
     [SerializeField] int chainLength = 3;
-    [SerializeField] Transform target;
+    [SerializeField] Transform target = null;
     [SerializeField] int iterations = 10;
     [SerializeField] float epsilon = 0.001f;
 

@@ -57,14 +57,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\FastIK\Scripts\FastIK\FastIKCCD.cs" />
-    <Compile Include="Assets\FastIK\Scripts\FastIK\FastIKFabric.cs" />
-    <Compile Include="Assets\FastIK\Scripts\FastIK\FastIKLook.cs" />
-    <Compile Include="Assets\FastIK\Scripts\Sample\SampleProcedualAnimation.cs" />
-    <Compile Include="Assets\FastIK\Scripts\Sample\SampleRotator.cs" />
-    <Compile Include="Assets\FastIK\Scripts\Sample\SampleSinMover.cs" />
     <Compile Include="Assets\Scripts\FabricIK.cs" />
-    <None Include="Assets\FastIK\Documentation.txt" />
+    <Compile Include="Assets\Scripts\GraphicalIK.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/FACULTATE/LICENTA/IK - Unity/InverseKinomatics/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

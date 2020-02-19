@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SphericalWristFK : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class SphericalWristFK : MonoBehaviour
     [SerializeField] Transform joint2 = null;
     [SerializeField] Transform endEffector = null;
     [SerializeField] Transform prismaticJoint = null;
+
+    [SerializeField] Text a1Text = null;
+    [SerializeField] Text a2Text = null;
+    [SerializeField] Text a3Text = null;
+    [SerializeField] Text d3Text = null;
+    [SerializeField] Text theta1Text = null;
+    [SerializeField] Text theta2Text = null;
 
     private float a1, a2, a3;
     private float theta1, theta2;
@@ -23,9 +31,10 @@ public class SphericalWristFK : MonoBehaviour
     {
         Init();
         SetTable();
+        SetTexts();
 
         H0_1 = GetMatrix(theta1, 90.0f, 0.0f, a1);
-        H1_2 = GetMatrix(theta2, 90.0f, 0.0f, 0.0f);
+        H1_2 = GetMatrix(theta2 + 90.0f, 90.0f, 0.0f, 0.0f);
         H2_3 = GetMatrix(0.0f, 0.0f, 0.0f, a2 + a3 + d3);
 
         H0_3 = H0_1 * H1_2 * H2_3;
@@ -34,31 +43,23 @@ public class SphericalWristFK : MonoBehaviour
         Debug.Log("Col 1 " + H0_3.GetColumn(1));
         Debug.Log("Col 2 " + H0_3.GetColumn(2));
         Debug.Log("Col 3 " + H0_3.GetColumn(3));
-
-        float finalPosX = endEffector.position.x - manBase.position.x;
-        float finalPosY = endEffector.position.y - manBase.position.y;
-        Debug.Log("Final pos X " + finalPosX);
-        Debug.Log("Final pos Y " + finalPosY);
     }
 
     private void Init()
     {
-        //a1 = 6.25f;
-        //a2 = 4.75f;
-        //a3 = 3.4f;
         a1 = joint1.position.y - manBase.position.y;
-        a2 = joint2.position.y - joint1.position.y;
-        a3 = endEffector.position.y - joint2.position.y;
-        theta1 = 45.0f;
-        theta2 = 45.0f;
+        a2 = joint2.position.x - joint1.position.x;
+        a3 = endEffector.position.x - joint2.position.x;
+        theta1 = 0.0f;
+        theta2 = 70.0f;
         d3 = 2.0f;
 
         Debug.Log(a1);
         Debug.Log(a2);
         Debug.Log(a3);
 
-        prismaticJoint.position = new Vector3(prismaticJoint.position.x, prismaticJoint.position.y + d3, prismaticJoint.position.z);
-        joint1.rotation = Quaternion.AngleAxis(theta2, -Vector3.forward);
+        prismaticJoint.position = new Vector3(prismaticJoint.position.x + d3, prismaticJoint.position.y, prismaticJoint.position.z);
+        joint1.rotation = Quaternion.AngleAxis(90.0f - theta2, -Vector3.forward);
         joint0.rotation = Quaternion.AngleAxis(theta1, -Vector3.up);
     }
 
@@ -103,5 +104,15 @@ public class SphericalWristFK : MonoBehaviour
     private float FromDtoR(float angle)
     {
         return angle * Mathf.PI / 180.0f;
+    }
+
+    private void SetTexts()
+    {
+        a1Text.text = "A1: " + a1.ToString();
+        a2Text.text = "A2: " + a2.ToString();
+        a3Text.text = "A3: " + a3.ToString();
+        d3Text.text = "D3: " + d3.ToString();
+        theta1Text.text = "Theta1: " + theta1.ToString();
+        theta2Text.text = "Theta2: " + theta2.ToString();
     }
 }

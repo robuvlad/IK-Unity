@@ -244,6 +244,7 @@ Transform:
   m_LocalScale: {x: 0.4, y: 2, z: 0.4}
   m_Children:
   - {fileID: 977193673}
+  - {fileID: 402153104}
   m_Father: {fileID: 1356329232}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -616,6 +617,36 @@ Transform:
   m_Father: {fileID: 1845879245}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &402153103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 402153104}
+  m_Layer: 0
+  m_Name: Leg1 Final GO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &402153104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402153103}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5000005, z: 0.5000001}
+  m_Children: []
+  m_Father: {fileID: 38891284}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &517230583
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 517230584}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Leg1Child GO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -677,6 +708,36 @@ Transform:
   - {fileID: 1262271586}
   m_Father: {fileID: 795306183}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &552825294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 552825295}
+  m_Layer: 0
+  m_Name: Leg1 Final GO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &552825295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552825294}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5000005, z: 0.5000001}
+  m_Children: []
+  m_Father: {fileID: 758740769}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &583271887
 GameObject:
@@ -1081,6 +1142,7 @@ Transform:
   m_LocalScale: {x: 0.4, y: 2, z: 0.4}
   m_Children:
   - {fileID: 517230584}
+  - {fileID: 552825295}
   m_Father: {fileID: 2048912911}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -1115,6 +1177,7 @@ Transform:
   m_LocalScale: {x: 0.4, y: 2, z: 0.4}
   m_Children:
   - {fileID: 545097507}
+  - {fileID: 1050842587}
   m_Father: {fileID: 1187348524}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -1178,6 +1241,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795306182}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &818775318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 818775319}
+  m_Layer: 0
+  m_Name: Leg1 Final GO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &818775319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818775318}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5000005, z: 0.5000001}
+  m_Children: []
+  m_Father: {fileID: 1449832074}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &977193672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,6 +1301,66 @@ Transform:
   - {fileID: 1823606852}
   m_Father: {fileID: 38891284}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &998394891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 998394892}
+  m_Layer: 0
+  m_Name: Leg1 Final GO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &998394892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998394891}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5000005, z: 0.5000001}
+  m_Children: []
+  m_Father: {fileID: 1380023387}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1050842586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1050842587}
+  m_Layer: 0
+  m_Name: Leg1 Final GO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1050842587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050842586}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5000005, z: 0.5000001}
+  m_Children: []
+  m_Father: {fileID: 795306183}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1165512133
 GameObject:
@@ -1240,6 +1393,7 @@ Transform:
   m_LocalScale: {x: 0.39999998, y: 2, z: 0.4}
   m_Children:
   - {fileID: 1507815305}
+  - {fileID: 1238636933}
   m_Father: {fileID: 1637009479}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -1332,6 +1486,36 @@ Transform:
   m_Children:
   - {fileID: 795306183}
   m_Father: {fileID: 1980274646}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1238636932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1238636933}
+  m_Layer: 0
+  m_Name: Leg2 Final GO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1238636933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238636932}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 2.5000002, y: 2.5000005, z: 0.5000001}
+  m_Children: []
+  m_Father: {fileID: 1165512134}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1262271585
@@ -1551,6 +1735,7 @@ Transform:
   m_LocalScale: {x: 0.4, y: 2, z: 0.4}
   m_Children:
   - {fileID: 171730035}
+  - {fileID: 998394892}
   m_Father: {fileID: 1363432000}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -1645,6 +1830,7 @@ Transform:
   m_LocalScale: {x: 0.4, y: 2, z: 0.4}
   m_Children:
   - {fileID: 1767590626}
+  - {fileID: 818775319}
   m_Father: {fileID: 1287259614}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -2042,12 +2228,18 @@ MonoBehaviour:
   up1GO: {fileID: 1889773495}
   up2GO: {fileID: 335306490}
   up3GO: {fileID: 370773701}
+  plane1: {fileID: 705141861}
+  plane2: {fileID: 334439734}
+  plane3: {fileID: 716564167}
   leg1GO: {fileID: 2048912911}
   leg2GO: {fileID: 1637009479}
   leg3GO: {fileID: 1363432000}
   leg4GO: {fileID: 1287259614}
   leg5GO: {fileID: 1187348524}
   leg6GO: {fileID: 1356329232}
+  endEffector: {fileID: 1983542142}
+  leg1FinalGO: {fileID: 552825295}
+  leg1ChildGO: {fileID: 517230584}
 --- !u!4 &1791876251
 Transform:
   m_ObjectHideFlags: 0

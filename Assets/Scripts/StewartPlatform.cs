@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class StewartPlatform : MonoBehaviour
 {
-    Vector3 A1, A2, P;
-    Vector3 B1, B2;
-    Vector3 S1;
-    Matrix4x4 R;
-
     [Header("Up points")]
     [SerializeField] Transform up1GO = null;
     [SerializeField] Transform up2GO = null;
     [SerializeField] Transform up3GO = null;
+
+    [Header("Planes")]
+    [SerializeField] Transform plane1 = null;
+    [SerializeField] Transform plane2 = null;
+    [SerializeField] Transform plane3 = null;
 
     [Header("Bottom Legs")]
     [SerializeField] Transform leg1GO = null;
@@ -22,29 +22,51 @@ public class StewartPlatform : MonoBehaviour
     [SerializeField] Transform leg5GO = null;
     [SerializeField] Transform leg6GO = null;
 
+    [Header("End effector")]
+    [SerializeField] Transform endEffector = null;
+
+    [SerializeField] Transform leg1FinalGO = null;
+
+    [SerializeField] Transform leg1ChildGO = null;
+
     void Start()
     {
-        A1 = new Vector3(-10.0f, -1.0f, 0.0f);
-        P = new Vector3(0.0f, 0.0f, 20.0f);
-        B1 = new Vector3(-5.0f, -5.0f, 20.0f);
+        RotateLegs();
+
+
+        Vector3 p = endEffector.position - transform.position;
+        Vector3 a1 = leg1GO.position - transform.position;
+        Vector3 b1 = up1GO.position - endEffector.position;
 
         Vector4 col1 = new Vector4(1.0f, 0.0f, 0.0f, 0.0f);
         Vector4 col2 = new Vector4(0.0f, 1.0f, 0.0f, 0.0f);
         Vector4 col3 = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
         Vector4 col4 = new Vector4(0.0f, 0.0f, 0.0f, 1.0f);
-        R = new Matrix4x4(col1, col2, col3, col4);
-        Vector4 newB = new Vector4(B1.x, B1.y, B1.z, 0.0f);
-        Vector4 result = R * newB;
-        Vector3 finalB = new Vector3(result.x, result.y, result.z);
+        Matrix4x4 rotation = new Matrix4x4(col1, col2, col3, col4);
+        Vector4 b14 = new Vector4(b1.x, b1.y, b1.z, 0.0f);
+        Vector4 result = rotation * b14;
 
-        S1 = P + finalB - A1;
+        Vector3 b1Prime = new Vector3(result.x, result.y, result.z);
 
-        Debug.Log("vector " + S1);
-        Debug.Log("lungime " + S1.magnitude);
+        Vector3 s1 = p - a1 + b1Prime;
+        float s1Magnitude = s1.magnitude;
 
-        RotateLegs();
+        float distance = (leg1FinalGO.position - leg1GO.position).magnitude;
 
-        FindBaseValues(2.0f, 3.1f, 120.0f);
+        float difference = s1Magnitude - distance;
+
+        leg1ChildGO.localPosition = new Vector3(0.0f, 0.0f + difference, 0.0f);
+
+        Debug.Log("p: " + p);
+        Debug.Log("a1: " + a1);
+        Debug.Log("b1: " + b1);
+        Debug.Log("s1: " + s1);
+        Debug.Log("s1 magnitude: " + s1Magnitude);
+
+        Debug.Log("distance: " + distance);
+
+
+        //FindBaseValues(2.0f, 3.1f, 120.0f);
     }
 
     private void RotateLegs()

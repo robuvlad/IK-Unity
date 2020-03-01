@@ -54,9 +54,9 @@ public class SphericalWristFK : MonoBehaviour
         a1 = joint1.position.y - manBase.position.y;
         a2 = joint2.position.x - joint1.position.x;
         a3 = endEffector.position.x - joint2.position.x;
-        theta1 = 25.0f;
-        theta2 = 56.0f;
-        d3 = 2.0f;
+        theta1 = 50.0f;
+        theta2 = 25.0f;
+        d3 = 0.0f;
     }
 
     private void InitPositions()

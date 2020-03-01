@@ -55,7 +55,7 @@ public class StewartPlatform : MonoBehaviour
 
         float difference = s1Magnitude - distance;
 
-        leg1ChildGO.localPosition = new Vector3(0.0f, 0.0f + difference, 0.0f);
+        leg1ChildGO.localPosition = new Vector3(0.0f, 0.0f + difference / leg1FinalGO.parent.localScale.y, 0.0f);
 
         Debug.Log("p: " + p);
         Debug.Log("a1: " + a1);
@@ -64,6 +64,7 @@ public class StewartPlatform : MonoBehaviour
         Debug.Log("s1 magnitude: " + s1Magnitude);
 
         Debug.Log("distance: " + distance);
+        Debug.Log("difference: " + difference);
 
 
         //FindBaseValues(2.0f, 3.1f, 120.0f);

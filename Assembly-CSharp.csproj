@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\FabricIK.cs" />
     <Compile Include="Assets\Scripts\GraphicalIK.cs" />
     <Compile Include="Assets\Scripts\SphericalWristFK.cs" />
+    <Compile Include="Assets\Scripts\StewartPlatform.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/FACULTATE/LICENTA/IK - Unity/InverseKinomatics/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

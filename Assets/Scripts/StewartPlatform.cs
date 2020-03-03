@@ -4,87 +4,126 @@ using UnityEngine;
 
 public class StewartPlatform : MonoBehaviour
 {
-    [Header("Up points")]
-    [SerializeField] Transform up1GO = null;
-    [SerializeField] Transform up2GO = null;
-    [SerializeField] Transform up3GO = null;
-
-    [Header("Planes")]
-    [SerializeField] Transform plane1 = null;
-    [SerializeField] Transform plane2 = null;
-    [SerializeField] Transform plane3 = null;
-
-    [Header("Bottom Legs")]
-    [SerializeField] Transform leg1GO = null;
-    [SerializeField] Transform leg2GO = null;
-    [SerializeField] Transform leg3GO = null;
-    [SerializeField] Transform leg4GO = null;
-    [SerializeField] Transform leg5GO = null;
-    [SerializeField] Transform leg6GO = null;
-
     [Header("End effector")]
     [SerializeField] Transform endEffector = null;
 
-    [SerializeField] Transform leg1FinalGO = null;
+    [Header("Base")]
+    [SerializeField] Transform baseEffector = null;
 
-    [SerializeField] Transform leg1ChildGO = null;
+    [Header("Bottom Legs GO")]
+    [SerializeField] Transform[] bottomLegs = null;
+
+    [Header("Top Legs GO")]
+    [SerializeField] Transform[] topLegs = null;
+
+    [Header("Final legs GO")]
+    [SerializeField] Transform[] finalLegs = null;
+
+    [Header("Children GO")]
+    [SerializeField] Transform[] children = null;
 
     void Start()
     {
         RotateLegs();
-
-
-        Vector3 p = endEffector.position - transform.position;
-        Vector3 a1 = leg1GO.position - transform.position;
-        Vector3 b1 = up1GO.position - endEffector.position;
-
-        Vector4 col1 = new Vector4(1.0f, 0.0f, 0.0f, 0.0f);
-        Vector4 col2 = new Vector4(0.0f, 1.0f, 0.0f, 0.0f);
-        Vector4 col3 = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
-        Vector4 col4 = new Vector4(0.0f, 0.0f, 0.0f, 1.0f);
-        Matrix4x4 rotation = new Matrix4x4(col1, col2, col3, col4);
-        Vector4 b14 = new Vector4(b1.x, b1.y, b1.z, 0.0f);
-        Vector4 result = rotation * b14;
-
-        Vector3 b1Prime = new Vector3(result.x, result.y, result.z);
-
-        Vector3 s1 = p - a1 + b1Prime;
-        float s1Magnitude = s1.magnitude;
-
-        float distance = (leg1FinalGO.position - leg1GO.position).magnitude;
-
-        float difference = s1Magnitude - distance;
-
-        leg1ChildGO.localPosition = new Vector3(0.0f, 0.0f + difference / leg1FinalGO.parent.localScale.y, 0.0f);
-
-        Debug.Log("p: " + p);
-        Debug.Log("a1: " + a1);
-        Debug.Log("b1: " + b1);
-        Debug.Log("s1: " + s1);
-        Debug.Log("s1 magnitude: " + s1Magnitude);
-
-        Debug.Log("distance: " + distance);
-        Debug.Log("difference: " + difference);
-
+        DoInverseKinematics();
 
         //FindBaseValues(2.0f, 3.1f, 120.0f);
     }
 
+    void Update()
+    {
+        RotateLegs();
+        DoInverseKinematics();
+    }
+
     private void RotateLegs()
     {
-        Vector3 direction1 = up1GO.position - leg1GO.position;
-        Vector3 direction2 = up3GO.position - leg2GO.position;
-        Vector3 direction3 = up3GO.position - leg3GO.position;
-        Vector3 direction4 = up2GO.position - leg4GO.position;
-        Vector3 direction5 = up2GO.position - leg5GO.position;
-        Vector3 direction6 = up1GO.position - leg6GO.position;
+        Vector3 direction1 = topLegs[0].position - bottomLegs[0].position;
+        Vector3 direction2 = topLegs[1].position - bottomLegs[1].position;
+        Vector3 direction3 = topLegs[1].position - bottomLegs[2].position;
+        Vector3 direction4 = topLegs[3].position - bottomLegs[3].position;
+        Vector3 direction5 = topLegs[3].position - bottomLegs[4].position;
+        Vector3 direction6 = topLegs[0].position - bottomLegs[5].position;
 
-        leg1GO.rotation = Quaternion.LookRotation(direction1);
-        leg2GO.rotation = Quaternion.LookRotation(direction2);
-        leg3GO.rotation = Quaternion.LookRotation(direction3);
-        leg4GO.rotation = Quaternion.LookRotation(direction4);
-        leg5GO.rotation = Quaternion.LookRotation(direction5);
-        leg6GO.rotation = Quaternion.LookRotation(direction6);
+        bottomLegs[0].rotation = Quaternion.LookRotation(direction1);
+        bottomLegs[1].rotation = Quaternion.LookRotation(direction2);
+        bottomLegs[2].rotation = Quaternion.LookRotation(direction3);
+        bottomLegs[3].rotation = Quaternion.LookRotation(direction4);
+        bottomLegs[4].rotation = Quaternion.LookRotation(direction5);
+        bottomLegs[5].rotation = Quaternion.LookRotation(direction6);
+    }
+
+    private void DoInverseKinematics()
+    {
+        Vector4 col1 = GetOneColumn(1.0f, 0.0f, 0.0f, 0.0f);
+        Vector4 col2 = GetOneColumn(0.0f, 1.0f, 0.0f, 0.0f);
+        Vector4 col3 = GetOneColumn(0.0f, 0.0f, 1.0f, 0.0f);
+        Vector4 col4 = GetOneColumn(0.0f, 0.0f, 0.0f, 1.0f);
+        Matrix4x4 matrix = GetMatrix4x4(col1, col2, col3, col4);
+
+        Vector3 p = GetP();
+
+        for(int i=0; i< bottomLegs.Length; i++)
+        {
+            Vector3 a = GetA(bottomLegs[i]);
+            Vector3 b = GetB(topLegs[i]);
+            Vector3 bFrame0 = GetBFrame0(b, matrix);
+            Vector3 s = GetS(p, a, bFrame0);
+            DrawIK(s, finalLegs[i], bottomLegs[i], children[i]);
+        }
+    }
+
+    private Vector4 GetOneColumn(float xValue, float yValue, float zValue, float wValue)
+    {
+        Vector4 column = new Vector4(xValue, yValue, zValue, wValue);
+        return column;
+    }
+
+    private Matrix4x4 GetMatrix4x4(Vector4 col1, Vector4 col2, Vector4 col3, Vector4 col4)
+    {
+        Matrix4x4 matrix = new Matrix4x4(col1, col2, col3, col4);
+        return matrix;
+    }
+
+    private void DrawIK(Vector3 s, Transform currentFinalLeg, Transform currentLeg, Transform currentChild)
+    {
+        float sMagnitude = s.magnitude;
+        float distance = (currentFinalLeg.position - currentLeg.position).magnitude;
+        float difference = sMagnitude - distance;
+
+        currentChild.localPosition = new Vector3(0.0f, 0.0f + difference / 2.0f, 0.0f);
+        //difference / currentFinalLeg.parent.localScale.y
+
+        Debug.Log(sMagnitude);
+        Debug.Log("diff " + difference);
+    }
+
+    private Vector3 GetP()
+    {
+        return endEffector.position - baseEffector.position;
+    }
+
+    private Vector3 GetA(Transform legGO)
+    {
+        return legGO.position - baseEffector.position;
+    }
+
+    private Vector3 GetB(Transform upGO)
+    {
+        return upGO.position - endEffector.position;
+    }
+
+    private Vector3 GetBFrame0(Vector3 b, Matrix4x4 matrix)
+    {
+        Vector4 bFrame1 = new Vector4(b.x, b.y, b.z, 0.0f);
+        Vector4 matrixResult = matrix * bFrame1;
+        Vector3 bFrame0 = new Vector3(matrixResult.x, matrixResult.y, matrixResult.z);
+        return bFrame0;
+    }
+
+    private Vector3 GetS(Vector3 p, Vector3 a, Vector3 bFrame0)
+    {
+        return p - a + bFrame0;
     }
 
     private void FindBaseValues(float x, float y, float angle)

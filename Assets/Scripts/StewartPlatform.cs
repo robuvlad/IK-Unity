@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StewartPlatform : MonoBehaviour
 {
@@ -22,18 +23,25 @@ public class StewartPlatform : MonoBehaviour
     [Header("Children GO")]
     [SerializeField] Transform[] children = null;
 
+    [Header("UI")]
+    [SerializeField] Slider[] sliders = null;
+
     void Start()
     {
         RotateLegs();
         DoInverseKinematics();
 
-        //FindBaseValues(2.0f, 3.1f, 120.0f);
+        InitializeSlider();
+
+        //FindBaseValues(5.0f, 0.0f, 120.0f);
     }
 
     void Update()
     {
         RotateLegs();
         DoInverseKinematics();
+
+        SetEndEffectorPosition(sliders[2].value, sliders[0].value, sliders[1].value, sliders[4].value, sliders[5].value, sliders[3].value);
     }
 
     private void RotateLegs()
@@ -91,11 +99,7 @@ public class StewartPlatform : MonoBehaviour
         float distance = (currentFinalLeg.position - currentLeg.position).magnitude;
         float difference = sMagnitude - distance;
 
-        currentChild.localPosition = new Vector3(0.0f, 0.0f + difference / 2.0f, 0.0f);
-        //difference / currentFinalLeg.parent.localScale.y
-
-        Debug.Log(sMagnitude);
-        Debug.Log("diff " + difference);
+        currentChild.localPosition = new Vector3(0.0f, 0.0f + difference / currentFinalLeg.parent.localScale.y, 0.0f);
     }
 
     private Vector3 GetP()
@@ -124,6 +128,46 @@ public class StewartPlatform : MonoBehaviour
     private Vector3 GetS(Vector3 p, Vector3 a, Vector3 bFrame0)
     {
         return p - a + bFrame0;
+    }
+
+
+    private void InitializeSlider()
+    {
+        //heaven
+        sliders[0].minValue = 3.0f;
+        sliders[0].maxValue = 6.0f;
+        sliders[0].value = 4.5f;
+
+        //surge
+        sliders[1].minValue = -2.0f;
+        sliders[1].maxValue = 2.0f;
+        sliders[1].value = 0.0f;
+
+        //sway
+        sliders[2].minValue = -2.0f;
+        sliders[2].maxValue = 2.0f;
+        sliders[2].value = 0.0f;
+
+        //roll
+        sliders[3].minValue = -30.0f;
+        sliders[3].maxValue = 30.0f;
+        sliders[3].value = 0.0f;
+
+        //pitch
+        sliders[4].minValue = -30.0f;
+        sliders[4].maxValue = 30.0f;
+        sliders[4].value = 0.0f;
+
+        //yaw
+        sliders[5].minValue = -30.0f;
+        sliders[5].maxValue = 30.0f;
+        sliders[5].value = 0.0f;
+    }
+
+    private void SetEndEffectorPosition(float xPos, float yPos, float zPos, float xRot, float yRot, float zRot)
+    {
+        endEffector.position = new Vector3(xPos, yPos, zPos);
+        endEffector.rotation = Quaternion.Euler(xRot, yRot, zRot);
     }
 
     private void FindBaseValues(float x, float y, float angle)

@@ -26,6 +26,8 @@ public class StewartPlatform : MonoBehaviour
     [Header("UI")]
     [SerializeField] Slider[] sliders = null;
 
+    private float phi_roll = 0.0f, theta_pitch = 0.0f, psi_yaw = 0.0f;
+
     void Start()
     {
         RotateLegs();
@@ -63,9 +65,15 @@ public class StewartPlatform : MonoBehaviour
 
     private void DoInverseKinematics()
     {
-        Vector4 col1 = GetOneColumn(1.0f, 0.0f, 0.0f, 0.0f);
-        Vector4 col2 = GetOneColumn(0.0f, 1.0f, 0.0f, 0.0f);
-        Vector4 col3 = GetOneColumn(0.0f, 0.0f, 1.0f, 0.0f);
+        float phi = FromDegreesToRadians(phi_roll);
+        float theta = FromDegreesToRadians(theta_pitch);
+        float psi = FromDegreesToRadians(psi_yaw);
+
+        Vector4 col1 = GetOneColumn(Mathf.Cos(psi) * Mathf.Cos(theta), Mathf.Sin(psi) * Mathf.Sin(theta), -Mathf.Sin(theta), 0.0f);
+        Vector4 col2 = GetOneColumn(-Mathf.Sin(psi) * Mathf.Cos(phi) + Mathf.Cos(psi) * Mathf.Sin(theta) * Mathf.Sin(phi),
+            Mathf.Cos(psi) * Mathf.Cos(phi) + Mathf.Sin(psi) * Mathf.Sin(theta) * Mathf.Sin(phi), Mathf.Cos(theta) * Mathf.Sin(phi), 0.0f);
+        Vector4 col3 = GetOneColumn(Mathf.Sin(psi) * Mathf.Sin(phi) + Mathf.Cos(psi) * Mathf.Sin(theta) * Mathf.Cos(phi),
+            -Mathf.Cos(psi) * Mathf.Sin(phi) + Mathf.Sin(psi) * Mathf.Sin(theta) * Mathf.Cos(phi), Mathf.Cos(theta) * Mathf.Cos(phi), 0.0f);
         Vector4 col4 = GetOneColumn(0.0f, 0.0f, 0.0f, 1.0f);
         Matrix4x4 matrix = GetMatrix4x4(col1, col2, col3, col4);
 

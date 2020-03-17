@@ -59,6 +59,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\FabricIK.cs" />
     <Compile Include="Assets\Scripts\GraphicalIK.cs" />
+    <Compile Include="Assets\Scripts\Position.cs" />
+    <Compile Include="Assets\Scripts\SP - FK\Socket.cs" />
     <Compile Include="Assets\Scripts\SphericalWristFK.cs" />
     <Compile Include="Assets\Scripts\StewartPlatform.cs" />
     <Reference Include="Unity.Timeline.Editor">

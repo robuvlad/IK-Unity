@@ -44,26 +44,16 @@ public class StewartPlatform : MonoBehaviour
         DoInverseKinematics();
 
         SetEndEffectorPosition(sliders[2].value, sliders[0].value, sliders[1].value, sliders[4].value, sliders[5].value, sliders[3].value);
-
-        Debug.Log(topLegs[0].position - bottomLegs[0].position);
-        Debug.Log(topLegs[1].position - bottomLegs[1].position);
-        Debug.Log(topLegs[2].position - bottomLegs[2].position);
-        Debug.Log(topLegs[3].position - bottomLegs[3].position);
-        Debug.Log(topLegs[4].position - bottomLegs[4].position);
-        Debug.Log(topLegs[5].position - bottomLegs[5].position);
-        
-
-        Debug.Log(endEffector.position + " " + endEffector.rotation);
     }
 
     private void RotateLegs()
     {
         Vector3 direction1 = topLegs[0].position - bottomLegs[0].position;
         Vector3 direction2 = topLegs[1].position - bottomLegs[1].position;
-        Vector3 direction3 = topLegs[1].position - bottomLegs[2].position;
+        Vector3 direction3 = topLegs[2].position - bottomLegs[2].position;
         Vector3 direction4 = topLegs[3].position - bottomLegs[3].position;
-        Vector3 direction5 = topLegs[3].position - bottomLegs[4].position;
-        Vector3 direction6 = topLegs[0].position - bottomLegs[5].position;
+        Vector3 direction5 = topLegs[4].position - bottomLegs[4].position;
+        Vector3 direction6 = topLegs[5].position - bottomLegs[5].position;
 
         bottomLegs[0].rotation = Quaternion.LookRotation(direction1);
         bottomLegs[1].rotation = Quaternion.LookRotation(direction2);
@@ -154,12 +144,12 @@ public class StewartPlatform : MonoBehaviour
         //heaven
         sliders[0].minValue = 3.0f;
         sliders[0].maxValue = 6.0f;
-        sliders[0].value = 5.0f;
+        sliders[0].value = 4.5f;
 
         //surge
         sliders[1].minValue = -2.0f;
         sliders[1].maxValue = 2.0f;
-        sliders[1].value = 2.0f;
+        sliders[1].value = 0.0f;
 
         //sway
         sliders[2].minValue = -2.0f;
@@ -174,7 +164,7 @@ public class StewartPlatform : MonoBehaviour
         //pitch
         sliders[4].minValue = -30.0f;
         sliders[4].maxValue = 30.0f;
-        sliders[4].value = 10.0f;
+        sliders[4].value = 0.0f;
 
         //yaw
         sliders[5].minValue = -30.0f;

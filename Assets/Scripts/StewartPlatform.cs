@@ -44,6 +44,13 @@ public class StewartPlatform : MonoBehaviour
         DoInverseKinematics();
 
         SetEndEffectorPosition(sliders[2].value, sliders[0].value, sliders[1].value, sliders[4].value, sliders[5].value, sliders[3].value);
+
+        Debug.Log("1 " + (topLegs[0].position - bottomLegs[0].position).magnitude);
+        Debug.Log("2 " + (topLegs[1].position - bottomLegs[1].position).magnitude);
+        Debug.Log("3 " + (topLegs[2].position - bottomLegs[2].position).magnitude);
+        Debug.Log("4 " + (topLegs[3].position - bottomLegs[3].position).magnitude);
+        Debug.Log("5 " + (topLegs[4].position - bottomLegs[4].position).magnitude);
+        Debug.Log("6 " + (topLegs[5].position - bottomLegs[5].position).magnitude);
     }
 
     private void RotateLegs()
@@ -149,22 +156,22 @@ public class StewartPlatform : MonoBehaviour
         //surge
         sliders[1].minValue = -2.0f;
         sliders[1].maxValue = 2.0f;
-        sliders[1].value = 0.0f;
+        sliders[1].value = 1.0f;
 
         //sway
         sliders[2].minValue = -2.0f;
         sliders[2].maxValue = 2.0f;
-        sliders[2].value = 0.0f;
+        sliders[2].value = 1.0f;
 
         //roll
         sliders[3].minValue = -30.0f;
         sliders[3].maxValue = 30.0f;
-        sliders[3].value = 0.0f;
+        sliders[3].value = 10.0f;
 
         //pitch
         sliders[4].minValue = -30.0f;
         sliders[4].maxValue = 30.0f;
-        sliders[4].value = 0.0f;
+        sliders[4].value = 20.0f;
 
         //yaw
         sliders[5].minValue = -30.0f;

@@ -551,6 +551,7 @@ GameObject:
   - component: {fileID: 1322795450}
   - component: {fileID: 1322795452}
   - component: {fileID: 1322795453}
+  - component: {fileID: 1322795454}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -570,6 +571,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0245e62c4e61cd94fa66e240e0b533b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bottomLegs:
+  - {fileID: 1672934519}
+  - {fileID: 1672934518}
+  - {fileID: 1672934517}
+  - {fileID: 1672934516}
+  - {fileID: 1672934515}
+  - {fileID: 1672934514}
+  topLegs:
+  - {fileID: 1672934522}
+  - {fileID: 1672934521}
+  - {fileID: 1672934520}
+  - {fileID: 515399751}
+  - {fileID: 325434786}
+  - {fileID: 163407297}
 --- !u!4 &1322795451
 Transform:
   m_ObjectHideFlags: 0
@@ -603,7 +618,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322795449}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ad27865b882d594782c6ee17f7ea06d, type: 3}
   m_Name: 
@@ -645,6 +660,46 @@ MonoBehaviour:
   - {fileID: 211369905}
   - {fileID: 211369904}
   - {fileID: 211369903}
+--- !u!114 &1322795454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322795449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9e335c9e6861f418e2520162e04c54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomLegs:
+  - {fileID: 1672934519}
+  - {fileID: 1672934518}
+  - {fileID: 1672934517}
+  - {fileID: 1672934516}
+  - {fileID: 1672934515}
+  - {fileID: 1672934514}
+  topLegs:
+  - {fileID: 1672934522}
+  - {fileID: 1672934521}
+  - {fileID: 1672934520}
+  - {fileID: 515399751}
+  - {fileID: 325434786}
+  - {fileID: 163407297}
+  children:
+  - {fileID: 1672934507}
+  - {fileID: 1672934506}
+  - {fileID: 1672934505}
+  - {fileID: 1672934504}
+  - {fileID: 1672934503}
+  - {fileID: 1672934502}
+  finalLegs:
+  - {fileID: 1672934513}
+  - {fileID: 1672934512}
+  - {fileID: 1672934511}
+  - {fileID: 1672934510}
+  - {fileID: 1672934509}
+  - {fileID: 1672934508}
 --- !u!1001 &1672934499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1108,10 +1163,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750697967}
-  m_LocalRotation: {x: 0.10012733, y: -0, z: -0, w: 0.9949746}
-  m_LocalPosition: {x: 0, y: 6.31, z: -14.36}
+  m_LocalRotation: {x: 0.06767841, y: -0.71095365, z: 0.07711836, w: 0.6957135}
+  m_LocalPosition: {x: 19.39, y: 7.85, z: 1.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 656526301}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 11.493001, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.761001, y: -91.175, z: 0.648}

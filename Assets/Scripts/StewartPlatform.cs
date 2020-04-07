@@ -26,6 +26,9 @@ public class StewartPlatform : MonoBehaviour
     [Header("UI")]
     [SerializeField] Slider[] sliders = null;
 
+    [Header("Canvas")]
+    [SerializeField] GameObject canvas = null;
+
     private float phi_roll = 0.0f, theta_pitch = 0.0f, psi_yaw = 0.0f;
 
     void Start()
@@ -45,12 +48,16 @@ public class StewartPlatform : MonoBehaviour
 
         SetEndEffectorPosition(sliders[2].value, sliders[0].value, sliders[1].value, sliders[4].value, sliders[5].value, sliders[3].value);
 
-        Debug.Log("1 " + (topLegs[0].position - bottomLegs[0].position).magnitude);
-        Debug.Log("2 " + (topLegs[1].position - bottomLegs[1].position).magnitude);
-        Debug.Log("3 " + (topLegs[2].position - bottomLegs[2].position).magnitude);
-        Debug.Log("4 " + (topLegs[3].position - bottomLegs[3].position).magnitude);
-        Debug.Log("5 " + (topLegs[4].position - bottomLegs[4].position).magnitude);
-        Debug.Log("6 " + (topLegs[5].position - bottomLegs[5].position).magnitude);
+        for (int i = 0; i < 6; i++)
+            Debug.Log(i + 1 + " " + (topLegs[i].position - bottomLegs[i].position));
+
+        for (int i = 0; i < 6; i++)
+            Debug.Log(i + 1 + " magn: " + (topLegs[i].position - bottomLegs[i].position).magnitude);
+
+        for(int i=0; i < 6; i++)
+        {
+            Debug.Log(i + 1 + " up pos " + topLegs[i].position);
+        }
     }
 
     private void RotateLegs()
@@ -151,27 +158,27 @@ public class StewartPlatform : MonoBehaviour
         //heaven
         sliders[0].minValue = 3.0f;
         sliders[0].maxValue = 6.0f;
-        sliders[0].value = 4.5f;
+        sliders[0].value = 5.1f;
 
         //surge
         sliders[1].minValue = -2.0f;
         sliders[1].maxValue = 2.0f;
-        sliders[1].value = 1.0f;
+        sliders[1].value = 1.2f;
 
         //sway
         sliders[2].minValue = -2.0f;
         sliders[2].maxValue = 2.0f;
-        sliders[2].value = 1.0f;
+        sliders[2].value = 0.0f;
 
         //roll
         sliders[3].minValue = -30.0f;
         sliders[3].maxValue = 30.0f;
-        sliders[3].value = 10.0f;
+        sliders[3].value = 5.0f;
 
         //pitch
         sliders[4].minValue = -30.0f;
         sliders[4].maxValue = 30.0f;
-        sliders[4].value = 20.0f;
+        sliders[4].value = 0.0f;
 
         //yaw
         sliders[5].minValue = -30.0f;

@@ -27,12 +27,13 @@ public class StewartPlatform : MonoBehaviour
     [SerializeField] Slider[] sliders = null;
 
     [Header("Canvas")]
-    [SerializeField] GameObject canvas = null;
+    [SerializeField] GameObject menu = null;
 
     private float phi_roll = 0.0f, theta_pitch = 0.0f, psi_yaw = 0.0f;
 
     void Start()
     {
+        ShowMenu();
         RotateLegs();
         DoInverseKinematics();
 
@@ -58,6 +59,11 @@ public class StewartPlatform : MonoBehaviour
         {
             Debug.Log(i + 1 + " up pos " + topLegs[i].position);
         }
+    }
+
+    private void ShowMenu()
+    {
+        menu.SetActive(true);
     }
 
     private void RotateLegs()

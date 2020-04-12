@@ -164,12 +164,12 @@ public class StewartPlatform : MonoBehaviour
         //heaven
         sliders[0].minValue = 3.0f;
         sliders[0].maxValue = 6.0f;
-        sliders[0].value = 5.1f;
+        sliders[0].value = 5.0f;
 
         //surge
         sliders[1].minValue = -2.0f;
         sliders[1].maxValue = 2.0f;
-        sliders[1].value = 1.2f;
+        sliders[1].value = 0.0f;
 
         //sway
         sliders[2].minValue = -2.0f;
@@ -179,12 +179,12 @@ public class StewartPlatform : MonoBehaviour
         //roll
         sliders[3].minValue = -30.0f;
         sliders[3].maxValue = 30.0f;
-        sliders[3].value = 5.0f;
+        sliders[3].value = 0.0f;
 
         //pitch
         sliders[4].minValue = -30.0f;
         sliders[4].maxValue = 30.0f;
-        sliders[4].value = 0.0f;
+        sliders[4].value = 5.0f;
 
         //yaw
         sliders[5].minValue = -30.0f;

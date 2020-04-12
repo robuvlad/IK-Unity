@@ -38,8 +38,6 @@ public class StewartPlatform : MonoBehaviour
         DoInverseKinematics();
 
         InitializeSlider();
-
-        //FindBaseValues(5.0f, 0.0f, 120.0f);
     }
 
     void Update()
@@ -48,17 +46,6 @@ public class StewartPlatform : MonoBehaviour
         DoInverseKinematics();
 
         SetEndEffectorPosition(sliders[2].value, sliders[0].value, sliders[1].value, sliders[4].value, sliders[5].value, sliders[3].value);
-
-        for (int i = 0; i < 6; i++)
-            Debug.Log(i + 1 + " " + (topLegs[i].position - bottomLegs[i].position));
-
-        for (int i = 0; i < 6; i++)
-            Debug.Log(i + 1 + " magn: " + (topLegs[i].position - bottomLegs[i].position).magnitude);
-
-        for(int i=0; i < 6; i++)
-        {
-            Debug.Log(i + 1 + " up pos " + topLegs[i].position);
-        }
     }
 
     private void ShowMenu()
@@ -162,33 +149,33 @@ public class StewartPlatform : MonoBehaviour
     private void InitializeSlider()
     {
         //heaven
-        sliders[0].minValue = 3.0f;
-        sliders[0].maxValue = 6.0f;
+        sliders[0].minValue = 3.5f;
+        sliders[0].maxValue = 5.5f;
         sliders[0].value = 5.0f;
 
         //surge
-        sliders[1].minValue = -2.0f;
-        sliders[1].maxValue = 2.0f;
+        sliders[1].minValue = -1.5f;
+        sliders[1].maxValue = 1.5f;
         sliders[1].value = 0.0f;
 
         //sway
-        sliders[2].minValue = -2.0f;
-        sliders[2].maxValue = 2.0f;
+        sliders[2].minValue = -1.5f;
+        sliders[2].maxValue = 1.5f;
         sliders[2].value = 0.0f;
 
         //roll
-        sliders[3].minValue = -30.0f;
-        sliders[3].maxValue = 30.0f;
+        sliders[3].minValue = -25.0f;
+        sliders[3].maxValue = 25.0f;
         sliders[3].value = 0.0f;
 
         //pitch
-        sliders[4].minValue = -30.0f;
-        sliders[4].maxValue = 30.0f;
+        sliders[4].minValue = -25.0f;
+        sliders[4].maxValue = 25.0f;
         sliders[4].value = 5.0f;
 
         //yaw
-        sliders[5].minValue = -30.0f;
-        sliders[5].maxValue = 30.0f;
+        sliders[5].minValue = -25.0f;
+        sliders[5].maxValue = 25.0f;
         sliders[5].value = 0.0f;
     }
 

@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\DeltaRobotIK.cs" />
     <Compile Include="Assets\Scripts\FabricIK.cs" />
     <Compile Include="Assets\Scripts\GraphicalIK.cs" />
     <Compile Include="Assets\Scripts\Position.cs" />

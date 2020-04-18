@@ -10,15 +10,18 @@ public class DeltaRobotIK : MonoBehaviour
     [SerializeField] Transform[] PPoints = null;
 
     [SerializeField] Transform[] topLPivots = null;
+    [SerializeField] Transform[] parallelograms = null;
 
     [SerializeField] Transform endEffector = null;
 
     [SerializeField] Transform sth = null;
     [SerializeField] Transform sth2 = null;
+    [SerializeField] Transform sth3 = null;
+    [SerializeField] Transform sth4 = null;
 
     private double W_B, U_B, S_B;
     private double W_P, U_P, S_P;
-    private double[] thetas = new double[3];
+    private double[] thetas = new double[3] { 0.0, 0.0, 0.0 };
     private double L = 2.0;
     private double l = 4.0;
 
@@ -29,16 +32,63 @@ public class DeltaRobotIK : MonoBehaviour
     void Start()
     {
         InitTriangles();
-        InitThetas();
         CalculateLi();
-        Calculateli();
-        CalculateAi();
+        //Calculateli();
+        //CalculateAi();
 
 
         DoInverseKinematics();
+        /*
+        float x = - (parallelograms[0].position.x - PPoints[0].position.x - 0.5f);
+        float y = - (parallelograms[0].position.y - endEffector.position.y);
+        float z = PPoints[0].position.z - parallelograms[0].position.z;
+        Vector3 target = new Vector3(x, y, z);
+        RotateObjectTowards(parallelograms[0], target);
 
-        //Debug.Log("dist " + (sth2.position - sth.position).magnitude);
+        x = -(parallelograms[0].position.x - PPoints[0].position.x - 0.5f);
+        y = -(parallelograms[0].position.y - endEffector.position.y);
+        z = PPoints[0].position.z - parallelograms[0].position.z;
+        target = new Vector3(x, y, z);
+        RotateObjectTowards(parallelograms[1], target);
 
+
+        x = -(parallelograms[2].position.x - PPoints[1].position.x + 0.25f);
+        y = -(parallelograms[2].position.y - endEffector.position.y);
+        z = -(parallelograms[2].position.z - PPoints[1].position.z - 0.4325f);
+        target = new Vector3(x, y, z);
+        Debug.Log("target1 " + target);
+        RotateObjectTowards(parallelograms[2], target);
+
+        //x = -(parallelograms[3].position.x - PPoints[1].position.x - 0.25f);
+        //y = -(parallelograms[3].position.y - endEffector.position.y);
+        //z = -(parallelograms[3].position.z - PPoints[1].position.z + 0.4325f);
+        target = new Vector3(x, y, z);
+        Debug.Log("target2 " + target);
+        RotateObjectTowards(parallelograms[3], target);
+
+        x = PPoints[2].position.x - parallelograms[4].position.x - 0.25f;
+        y = -(parallelograms[4].position.y - endEffector.position.y);
+        z = -(parallelograms[4].position.z - PPoints[2].position.z + 0.4325f);
+        target = new Vector3(x, y, z);
+        Debug.Log("target2 " + target);
+        RotateObjectTowards(parallelograms[4], target);
+
+        x = PPoints[2].position.x - parallelograms[5].position.x + 0.25f;
+        y = -(parallelograms[5].position.y - endEffector.position.y);
+        z = -(parallelograms[5].position.z - PPoints[2].position.z - 0.4325f);
+        target = new Vector3(x, y, z);
+        Debug.Log("target2 " + target);
+        RotateObjectTowards(parallelograms[5], target);
+
+        for (int i = 0; i < parallelograms.Length; i++)
+            Debug.Log(i + "  " + parallelograms[i].position);
+
+        Debug.Log("sth  " + sth.position);
+        Debug.Log("sth2  " + sth2.position);
+        Debug.Log("sth3  " + sth3.position);
+        Debug.Log("sth4  " + sth4.position);
+
+        */
         /*
         S_B = 0.567;
         U_B = 0.327;
@@ -64,11 +114,11 @@ public class DeltaRobotIK : MonoBehaviour
             double currentFi = Fi[i];
             double currentEi = Ei[i];
             double currentGi = Gi[i];
-            double[] roots = GetRootsTi(currentFi, currentEi, currentGi);
-            Debug.Log(i + "  " + roots[0]);
-            Debug.Log(i + "  " + roots[1]);
-        }*/
-
+            double roots = GetRootsTi(currentFi, currentEi, currentGi);
+            double angle = 2 * Math.Atan(roots);
+            Debug.Log(i + "  " + angle);
+        }
+        */
     }
 
     private void InitTriangles()
@@ -82,13 +132,6 @@ public class DeltaRobotIK : MonoBehaviour
         W_P = ConvertToTwoDecimalPlaces((Mathf.Sqrt(3) / 6.0) * S_P);
 
         Debug.Log(W_B + " " + U_B + " " + S_B + " " + W_P + " " + U_P + " " + S_P);
-    }
-
-    private void InitThetas()
-    {
-        thetas[0] = 45.0;
-        thetas[1] = 45.0;
-        thetas[2] = 45.0;
     }
 
     private void CalculateLi()
@@ -113,9 +156,9 @@ public class DeltaRobotIK : MonoBehaviour
         Vector3 leg2 = new Vector3(-x_2, -z_2, -y_2);
         Vector3 leg3 = new Vector3(-x_3, -z_3, -y_3);
 
-        RotateObjectTowards(topLPivots[0], leg1);
-        RotateObjectTowards(topLPivots[1], leg2);
-        RotateObjectTowards(topLPivots[2], leg3);
+        //RotateObjectTowards(topLPivots[0], leg1);
+        //RotateObjectTowards(topLPivots[1], leg2);
+        //RotateObjectTowards(topLPivots[2], leg3);
     }
 
     private void Calculateli()
@@ -157,13 +200,63 @@ public class DeltaRobotIK : MonoBehaviour
             double currentFi = ConvertToTwoDecimalPlaces(Fi[i]);
             double currentEi = ConvertToTwoDecimalPlaces(Ei[i]);
             double currentGi = ConvertToTwoDecimalPlaces(Gi[i]);
-            double[] roots = GetRootsTi(currentFi, currentEi, currentGi);
-            Debug.Log("Fi " + currentFi);
-            Debug.Log("Ei " + currentEi);
-            Debug.Log("Gi " + currentGi);
-            Debug.Log(i + "  " + roots[0]);
-            Debug.Log(i + "  " + roots[1]);
+            double roots = GetRootsTi(currentFi, currentEi, currentGi);
+            thetas[i] = 2 * Math.Atan(roots);
+            Debug.Log(i + "  " + thetas[i]);
         }
+        RotateLegs();
+        RotateParallelograms();
+    }
+
+    private void RotateLegs()
+    {
+        float angle1 = ConvertDoubleToFloat(ConvertRadiansToDegrees(thetas[0]));
+        float angle2 = ConvertDoubleToFloat(ConvertRadiansToDegrees(thetas[1]));
+        float angle3 = ConvertDoubleToFloat(ConvertRadiansToDegrees(thetas[2]));
+
+        topLPivots[0].rotation = Quaternion.Euler(new Vector3(-angle1, topLPivots[0].eulerAngles.y, topLPivots[0].eulerAngles.z));
+        topLPivots[1].rotation = Quaternion.Euler(new Vector3(-angle2, topLPivots[1].eulerAngles.y, topLPivots[1].eulerAngles.z));
+        topLPivots[2].rotation = Quaternion.Euler(new Vector3(-angle3, topLPivots[2].eulerAngles.y, topLPivots[2].eulerAngles.z));
+    }
+
+    private void RotateParallelograms()
+    {
+        Vector3 firstTarget = GetFirstParallelogram();
+        Vector3 secondTarget = GetSecondParallelogram();
+        Vector3 thirdTarget = GetThirdParallelogram();
+        RotateObjectTowards(parallelograms[0], firstTarget);
+        RotateObjectTowards(parallelograms[1], firstTarget);
+        RotateObjectTowards(parallelograms[2], secondTarget);
+        RotateObjectTowards(parallelograms[3], secondTarget);
+        RotateObjectTowards(parallelograms[4], thirdTarget);
+        RotateObjectTowards(parallelograms[5], thirdTarget);
+    }
+
+    private Vector3 GetFirstParallelogram()
+    {
+        float x = -(parallelograms[0].position.x - PPoints[0].position.x - 0.5f);
+        float y = -(parallelograms[0].position.y - endEffector.position.y);
+        float z = PPoints[0].position.z - parallelograms[0].position.z;
+        Vector3 target = new Vector3(x, y, z);
+        return target;
+    }
+
+    private Vector3 GetSecondParallelogram()
+    {
+        float x = -(parallelograms[2].position.x - PPoints[1].position.x + 0.25f);
+        float y = -(parallelograms[2].position.y - endEffector.position.y);
+        float z = -(parallelograms[2].position.z - PPoints[1].position.z - 0.4325f);
+        Vector3 target = new Vector3(x, y, z);
+        return target;
+    }
+
+    private Vector3 GetThirdParallelogram()
+    {
+        float  x = PPoints[2].position.x - parallelograms[4].position.x - 0.25f;
+        float y = -(parallelograms[4].position.y - endEffector.position.y);
+        float z = -(parallelograms[4].position.z - PPoints[2].position.z + 0.4325f);
+        Vector3 target = new Vector3(x, y, z);
+        return target;
     }
 
     private void GenerateEi(Vector3 vec)
@@ -194,12 +287,13 @@ public class DeltaRobotIK : MonoBehaviour
             2 * (-x * Get_b() + y * Get_c()) - Math.Pow(l, 2);
     }
 
-    private double[] GetRootsTi(double Fi, double Ei, double Gi)
+    private double GetRootsTi(double Fi, double Ei, double Gi)
     {
         double ti1 = (-Fi + Math.Sqrt(Math.Pow(Ei, 2) + Math.Pow(Fi, 2) - Math.Pow(Gi, 2))) / (Gi - Ei);
         double ti2 = (-Fi - Math.Sqrt(Math.Pow(Ei, 2) + Math.Pow(Fi, 2) - Math.Pow(Gi, 2))) / (Gi - Ei);
-        double[] roots = new double[] { ti1, ti2 };
-        return roots;
+        if (ti1 <= 1.5 && ti1 >= -1.5)
+            return ti1;
+        return ti2;
     } 
 
     private void RotateObjectTowards(Transform currentObject, Vector3 target)
@@ -230,6 +324,12 @@ public class DeltaRobotIK : MonoBehaviour
     private double ConvertDegreesToRadians(double angle)
     {
         double formula = angle * Math.PI / 180;
+        return formula;
+    }
+
+    private double ConvertRadiansToDegrees(double angle)
+    {
+        double formula = (angle * 180.0) / Math.PI;
         return formula;
     }
 

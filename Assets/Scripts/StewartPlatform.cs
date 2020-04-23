@@ -151,32 +151,32 @@ public class StewartPlatform : MonoBehaviour
         //heaven
         sliders[0].minValue = 3.5f;
         sliders[0].maxValue = 5.5f;
-        sliders[0].value = 5.0f;
+        sliders[0].value = 5.16f;
 
         //surge
         sliders[1].minValue = -1.5f;
         sliders[1].maxValue = 1.5f;
-        sliders[1].value = 0.0f;
+        sliders[1].value = 0.07f;
 
         //sway
         sliders[2].minValue = -1.5f;
         sliders[2].maxValue = 1.5f;
-        sliders[2].value = 0.0f;
+        sliders[2].value = 0.29f;
 
         //roll
         sliders[3].minValue = -25.0f;
         sliders[3].maxValue = 25.0f;
-        sliders[3].value = 0.0f;
+        sliders[3].value = -2.06f;
 
         //pitch
         sliders[4].minValue = -25.0f;
         sliders[4].maxValue = 25.0f;
-        sliders[4].value = 5.0f;
+        sliders[4].value = 10.93f;
 
         //yaw
         sliders[5].minValue = -25.0f;
         sliders[5].maxValue = 25.0f;
-        sliders[5].value = 0.0f;
+        sliders[5].value = 1.91f;
     }
 
     private void SetEndEffectorPosition(float xPos, float yPos, float zPos, float xRot, float yRot, float zRot)

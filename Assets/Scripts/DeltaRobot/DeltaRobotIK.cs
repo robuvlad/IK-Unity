@@ -43,6 +43,9 @@ public class DeltaRobotIK : MonoBehaviour
     {
         DoInverseKinematics();
         UpdateSliderValues();
+
+        for (int i = 0; i < DeltaRobotIKUtils.NO_OF_LEGS; i++)
+            Debug.Log(i + "  " + ConvertRadiansToDegrees(thetas[i]));
     }
 
     private void SetupVariables()
@@ -51,8 +54,8 @@ public class DeltaRobotIK : MonoBehaviour
         Ei = new double[3];
         Fi = new double[3];
         Gi = new double[3];
-        L = DeltaRobotUtils.L;
-        l = DeltaRobotUtils.l;
+        L = DeltaRobotIKUtils.L;
+        l = DeltaRobotIKUtils.l;
     }
 
     private void InitTriangles()
@@ -68,17 +71,17 @@ public class DeltaRobotIK : MonoBehaviour
 
     private void InitSliderValues()
     {
-        sliders[0].minValue = DeltaRobotUtils.X_MIN_VALUE;
-        sliders[0].maxValue = DeltaRobotUtils.X_MAX_VALUE;
-        sliders[0].value = DeltaRobotUtils.X_INITIAL_VALUE;
+        sliders[0].minValue = DeltaRobotIKUtils.X_MIN_VALUE;
+        sliders[0].maxValue = DeltaRobotIKUtils.X_MAX_VALUE;
+        sliders[0].value = DeltaRobotIKUtils.X_INITIAL_VALUE;
 
-        sliders[1].minValue = DeltaRobotUtils.Y_MIN_VALUE;
-        sliders[1].maxValue = DeltaRobotUtils.Y_MAX_VALUE;
-        sliders[1].value = DeltaRobotUtils.Y_INITIAL_VALUE;
+        sliders[1].minValue = DeltaRobotIKUtils.Y_MIN_VALUE;
+        sliders[1].maxValue = DeltaRobotIKUtils.Y_MAX_VALUE;
+        sliders[1].value = DeltaRobotIKUtils.Y_INITIAL_VALUE;
 
-        sliders[2].minValue = DeltaRobotUtils.Z_MIN_VALUE;
-        sliders[2].maxValue = DeltaRobotUtils.Z_MAX_VALUE;
-        sliders[2].value = DeltaRobotUtils.Z_INITIAL_VALUE;
+        sliders[2].minValue = DeltaRobotIKUtils.Z_MIN_VALUE;
+        sliders[2].maxValue = DeltaRobotIKUtils.Z_MAX_VALUE;
+        sliders[2].value = DeltaRobotIKUtils.Z_INITIAL_VALUE;
     }
 
     private void UpdateSliderValues()
@@ -92,7 +95,7 @@ public class DeltaRobotIK : MonoBehaviour
         GenerateEi(P);
         GenerateFi(P);
         GenerateGi(P);
-        for(int i = 0; i < DeltaRobotUtils.NO_OF_LEGS; i++)
+        for(int i = 0; i < DeltaRobotIKUtils.NO_OF_LEGS; i++)
         {
             double currentFi = ConvertToTwoDecimalPlaces(Fi[i]);
             double currentEi = ConvertToTwoDecimalPlaces(Ei[i]);
@@ -113,7 +116,7 @@ public class DeltaRobotIK : MonoBehaviour
 
     private void GenerateFi(Vector3 vec)
     {
-        for (int i = 0; i < DeltaRobotUtils.NO_OF_LEGS; i++)
+        for (int i = 0; i < DeltaRobotIKUtils.NO_OF_LEGS; i++)
         {
             Fi[i] = 2 * vec.z * L;
         }

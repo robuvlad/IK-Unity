@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\DeltaRobot\DeltaRobotFK.cs" />
     <Compile Include="Assets\Scripts\DeltaRobot\DeltaRobotIK.cs" />
     <Compile Include="Assets\Scripts\DeltaRobot\DeltaRobotUtils.cs" />
     <Compile Include="Assets\Scripts\FabricIK.cs" />

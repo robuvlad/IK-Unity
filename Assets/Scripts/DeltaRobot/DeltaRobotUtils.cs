@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.DeltaRobot
 {
-    public static class DeltaRobotUtils
+    public static class DeltaRobotIKUtils
     {
         public static int NO_OF_LEGS = 3;
 

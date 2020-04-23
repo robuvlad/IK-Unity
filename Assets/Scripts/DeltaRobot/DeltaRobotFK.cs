@@ -1,8 +1,10 @@
-﻿using MathNet.Numerics;
+﻿using Assets.Scripts.DeltaRobot;
+using MathNet.Numerics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeltaRobotFK : MonoBehaviour
 {
@@ -13,42 +15,51 @@ public class DeltaRobotFK : MonoBehaviour
 
     [Header("Legs")]
     [SerializeField] Transform[] topLPivots = null;
+    [SerializeField] Transform[] parallelograms = null;
 
     [Header("End Effector")]
-    [SerializeField] Transform[] endEffector = null;
+    [SerializeField] Transform endEffector = null;
+
+    [Header("UI Slider")]
+    [SerializeField] Slider[] sliders = null;
 
     private double[] thetas;
     private Vector3[] centresCircles = new Vector3[3];
 
-    private int NO_OF_LEGS = 3;
-    private double L = 2.0f;
-    private double l = 4.0f;
+    private double L;
+    private double l;
     private double W_B, U_B, S_B;
     private double W_P, U_P, S_P;
 
-    private double[] coefficients = new double[3];
-    private double[,] a = new double[2,3];
-    private double[] b = new double[2];
-    private double[] c = new double[7];
+    private int NO_OF_LEGS;
+    private double[] coefficients;
+    private double[,] a;
+    private double[] b;
+    private double[] c;
     private Vector3 endEffectorPosition;
 
     void Start()
     {
+        Setup();
         InitTriangles();
         InitThetas();
+        InitSliderValues();
+    }
 
-        //update
-        UpdateCentresCircles();
-        UpdateFirstVariables();
-        UpdateSecondVariables();
-        UpdateCoefficients();
+    void Update()
+    {
+        DoForwardKinematics();
+    }
 
-        RotateLegs();
-
-
-        FindRootsFromEquation();
-
-        Debug.Log("end " + endEffectorPosition);
+    private void Setup()
+    {
+        L = DeltaRobotFKUtils.L;
+        l = DeltaRobotFKUtils.l;
+        NO_OF_LEGS = DeltaRobotFKUtils.NO_OF_LEGS;
+        coefficients = new double[NO_OF_LEGS];
+        a = new double[DeltaRobotFKUtils.FIRST_ROW_NUMBER, DeltaRobotFKUtils.FIRST_COLUMN_NUMBER];
+        b = new double[DeltaRobotFKUtils.SECOND_NUMBER];
+        c = new double[DeltaRobotFKUtils.THIRD_NUMBER];
     }
 
     private void InitTriangles()
@@ -64,10 +75,70 @@ public class DeltaRobotFK : MonoBehaviour
 
     private void InitThetas()
     {
-        thetas = new double[3];
+        thetas = new double[NO_OF_LEGS];
         thetas[0] = 34;
         thetas[1] = 28;
         thetas[2] = 12;
+    }
+
+    private void InitSliderValues()
+    {
+        for(int i=0; i < NO_OF_LEGS; i++) {
+            sliders[i].minValue = DeltaRobotFKUtils.SLIDER_MIN_VALUE;
+            sliders[i].maxValue = DeltaRobotFKUtils.SLIDER_MAX_VALUE;
+        }    
+        sliders[0].value = 38.0f;
+        sliders[1].value = 28.0f;
+        sliders[2].value = 12.0f;
+    }
+
+    private void DoForwardKinematics()
+    {
+        UpdateSliderValues();
+        UpdateCentresCircles();
+        UpdateFirstVariables();
+        UpdateSecondVariables();
+        UpdateCoefficients();
+
+        FindRootsFromEquation();
+        endEffector.localPosition = endEffectorPosition;
+
+        RotateLegs();
+        RotateParallelograms();
+    }
+
+    private void UpdateSliderValues()
+    {
+        thetas[0] = sliders[0].value;
+        thetas[1] = sliders[1].value;
+        thetas[2] = sliders[2].value;
+    }
+
+    private void UpdateCentresCircles()
+    {
+        double radian1 = ConvertDegreesToRadians(thetas[0]);
+        double radian2 = ConvertDegreesToRadians(thetas[1]);
+        double radian3 = ConvertDegreesToRadians(thetas[2]);
+
+        float x = 0.0f;
+        float y = ConvertDoubleToFloat(-W_B - L * Math.Cos(radian1) + U_P);
+        float z = ConvertDoubleToFloat(-L * Math.Sin(radian1));
+        SetCentreOfSpecificCircle(0, x, y, z);
+
+        x = ConvertDoubleToFloat((Math.Sqrt(3) / 2.0) * (W_B + L * Math.Cos(radian2)) - S_P / 2.0);
+        y = ConvertDoubleToFloat((1.0 / 2.0) * (W_B + L * Math.Cos(radian2)) - W_P);
+        z = ConvertDoubleToFloat(-L * Math.Sin(radian2));
+        SetCentreOfSpecificCircle(1, x, y, z);
+
+        x = ConvertDoubleToFloat(-(Math.Sqrt(3) / 2.0) * (W_B + L * Math.Cos(radian3)) + S_P / 2.0);
+        y = ConvertDoubleToFloat((1.0 / 2.0) * (W_B + L * Math.Cos(radian3)) - W_P);
+        z = ConvertDoubleToFloat(-L * Math.Sin(radian3));
+        SetCentreOfSpecificCircle(2, x, y, z);
+    }
+
+    private void SetCentreOfSpecificCircle(int indexCentreOfCircle, float x, float y, float z)
+    {
+        centresCircles[indexCentreOfCircle] = new Vector3(x, y, z);
     }
 
     private void UpdateFirstVariables()
@@ -105,31 +176,24 @@ public class DeltaRobotFK : MonoBehaviour
             Math.Pow(centresCircles[0].y, 2) + Math.Pow(centresCircles[0].z, 2) - Math.Pow(l, 2);
     }
 
-    private void UpdateCentresCircles()
+    private void FindRootsFromEquation()
     {
-        double radian1 = ConvertDegreesToRadians(thetas[0]);
-        double radian2 = ConvertDegreesToRadians(thetas[1]);
-        double radian3 = ConvertDegreesToRadians(thetas[2]);
-
-        float x = 0.0f;
-        float y = ConvertDoubleToFloat(-W_B - L * Math.Cos(radian1) + U_P);
-        float z = ConvertDoubleToFloat(-L * Math.Sin(radian1));
-        SetCentreOfSpecificCircle(0, x, y, z);
-
-        x = ConvertDoubleToFloat((Math.Sqrt(3) / 2.0) * (W_B + L * Math.Cos(radian2)) - S_P / 2.0);
-        y = ConvertDoubleToFloat((1.0 / 2.0) * (W_B + L * Math.Cos(radian2)) - W_P);
-        z = ConvertDoubleToFloat(-L * Math.Sin(radian2));
-        SetCentreOfSpecificCircle(1, x, y, z);
-
-        x = ConvertDoubleToFloat(-(Math.Sqrt(3) / 2.0) * (W_B + L * Math.Cos(radian3)) + S_P / 2.0);
-        y = ConvertDoubleToFloat((1.0 / 2.0) * (W_B + L * Math.Cos(radian3)) - W_P);
-        z = ConvertDoubleToFloat(-L * Math.Sin(radian3));
-        SetCentreOfSpecificCircle(2, x, y, z);
-    }
-
-    private void SetCentreOfSpecificCircle(int indexCentreOfCircle, float x, float y, float z)
-    {
-        centresCircles[indexCentreOfCircle] = new Vector3(x, y, z);
+        double[] coefs = new double[3] { coefficients[2], coefficients[1], coefficients[0] };
+        System.Numerics.Complex[] roots = FindRoots.Polynomial(coefs);
+        for (int i = 0; i < 2; i++)
+        {
+            if (roots[i].Imaginary == 0)
+            {
+                double x = c[3] * roots[i].Real + c[4];
+                double z = c[5] * roots[i].Real + c[6];
+                if (z < 0)
+                {
+                    double y = roots[i].Real;
+                    endEffectorPosition = new Vector3(ConvertDoubleToFloat(x), ConvertDoubleToFloat(z), ConvertDoubleToFloat(y));
+                    Debug.Log(x + "  " + y + "  " + z);
+                }
+            }
+        }
     }
 
     private void RotateLegs()
@@ -143,23 +207,49 @@ public class DeltaRobotFK : MonoBehaviour
         topLPivots[2].rotation = Quaternion.Euler(new Vector3(-angle3, topLPivots[2].eulerAngles.y, topLPivots[2].eulerAngles.z));
     }
 
-    private void FindRootsFromEquation()
+    private void RotateParallelograms()
     {
-        double[] coefs = new double[3] { coefficients[2], coefficients[1], coefficients[0] };
-        System.Numerics.Complex[] roots = FindRoots.Polynomial(coefs);
-        for(int i=0; i < 2; i++)
-        {
-            if (roots[i].Imaginary == 0)
-            {
-                double x = c[3] * roots[i].Real + c[4];
-                double z = c[5] * roots[i].Real + c[6];
-                if (z < 0)
-                {
-                    double y = roots[i].Real;
-                    endEffectorPosition = new Vector3(ConvertDoubleToFloat(x), ConvertDoubleToFloat(y), ConvertDoubleToFloat(z));
-                }
-            }
-        }
+        Vector3 firstTarget = GetFirstParallelogram();
+        Vector3 secondTarget = GetSecondParallelogram();
+        Vector3 thirdTarget = GetThirdParallelogram();
+        RotateObjectTowards(parallelograms[0], firstTarget);
+        RotateObjectTowards(parallelograms[1], firstTarget);
+        RotateObjectTowards(parallelograms[2], secondTarget);
+        RotateObjectTowards(parallelograms[3], secondTarget);
+        RotateObjectTowards(parallelograms[4], thirdTarget);
+        RotateObjectTowards(parallelograms[5], thirdTarget);
+    }
+
+    private Vector3 GetFirstParallelogram()
+    {
+        float x = -(parallelograms[0].position.x - PPoints[0].position.x - 0.5f);
+        float y = -(parallelograms[0].position.y - endEffector.position.y);
+        float z = PPoints[0].position.z - parallelograms[0].position.z;
+        Vector3 target = new Vector3(x, y, z);
+        return target;
+    }
+
+    private Vector3 GetSecondParallelogram()
+    {
+        float x = -(parallelograms[2].position.x - PPoints[1].position.x + 0.25f);
+        float y = -(parallelograms[2].position.y - endEffector.position.y);
+        float z = -(parallelograms[2].position.z - PPoints[1].position.z - 0.4325f);
+        Vector3 target = new Vector3(x, y, z);
+        return target;
+    }
+
+    private Vector3 GetThirdParallelogram()
+    {
+        float x = PPoints[2].position.x - parallelograms[4].position.x - 0.25f;
+        float y = -(parallelograms[4].position.y - endEffector.position.y);
+        float z = -(parallelograms[4].position.z - PPoints[2].position.z + 0.4325f);
+        Vector3 target = new Vector3(x, y, z);
+        return target;
+    }
+
+    private void RotateObjectTowards(Transform currentObject, Vector3 target)
+    {
+        currentObject.rotation = Quaternion.LookRotation(target);
     }
 
     private double ConvertDegreesToRadians(double angle)

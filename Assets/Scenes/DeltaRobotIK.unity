@@ -176,7 +176,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18552026}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4283e789c4282c94fa8b9b6ad078622c, type: 3}
   m_Name: 
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18552026}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8dae1ad522b69274e9d86338e0d456db, type: 3}
   m_Name: 
@@ -251,6 +251,18 @@ MonoBehaviour:
   - {fileID: 1667492095}
   - {fileID: 2427084}
   - {fileID: 1711311382}
+  parallelograms:
+  - {fileID: 1129023796}
+  - {fileID: 903119903}
+  - {fileID: 766228172}
+  - {fileID: 601305448}
+  - {fileID: 1919297907}
+  - {fileID: 1137500013}
+  endEffector: {fileID: 1619260411}
+  sliders:
+  - {fileID: 1941440552}
+  - {fileID: 1855043432}
+  - {fileID: 1848779561}
 --- !u!1 &76934906
 GameObject:
   m_ObjectHideFlags: 0

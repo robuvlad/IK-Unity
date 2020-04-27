@@ -46,6 +46,8 @@ public class DeltaRobotIK : MonoBehaviour
 
         for (int i = 0; i < DeltaRobotIKUtils.NO_OF_LEGS; i++)
             Debug.Log(i + "  " + ConvertRadiansToDegrees(thetas[i]));
+
+        Debug.Log("pos " + endEffector.localPosition);
     }
 
     private void SetupVariables()

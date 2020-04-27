@@ -76,9 +76,9 @@ public class DeltaRobotFK : MonoBehaviour
     private void InitThetas()
     {
         thetas = new double[NO_OF_LEGS];
-        thetas[0] = 34;
-        thetas[1] = 28;
-        thetas[2] = 12;
+        thetas[0] = 38;
+        thetas[1] = 22;
+        thetas[2] = 15;
     }
 
     private void InitSliderValues()
@@ -88,8 +88,9 @@ public class DeltaRobotFK : MonoBehaviour
             sliders[i].maxValue = DeltaRobotFKUtils.SLIDER_MAX_VALUE;
         }    
         sliders[0].value = 38.0f;
-        sliders[1].value = 28.0f;
-        sliders[2].value = 12.0f;
+        sliders[1].value = 22.0f;
+        sliders[2].value = 15.0f;
+        //38, 28, 12
     }
 
     private void DoForwardKinematics()
@@ -180,18 +181,68 @@ public class DeltaRobotFK : MonoBehaviour
     {
         double[] coefs = new double[3] { coefficients[2], coefficients[1], coefficients[0] };
         System.Numerics.Complex[] roots = FindRoots.Polynomial(coefs);
-        for (int i = 0; i < 2; i++)
+        if (float.IsNaN(ConvertDoubleToFloat(roots[0].Real)) || float.IsNaN(ConvertDoubleToFloat(roots[0].Imaginary)))
         {
-            if (roots[i].Imaginary == 0)
+            Debug.Log("roots " + roots[0]);
+            ResolveSingularity();
+        }
+        else
+            for (int i = 0; i < 2; i++)
             {
-                double x = c[3] * roots[i].Real + c[4];
-                double z = c[5] * roots[i].Real + c[6];
-                if (z < 0)
+                if (roots[i].Imaginary == 0)
                 {
-                    double y = roots[i].Real;
-                    endEffectorPosition = new Vector3(ConvertDoubleToFloat(x), ConvertDoubleToFloat(z), ConvertDoubleToFloat(y));
-                    Debug.Log(x + "  " + y + "  " + z);
+                    double x = c[3] * roots[i].Real + c[4];
+                    double z = c[5] * roots[i].Real + c[6];
+                    if (z < 0)
+                    {
+                        double y = roots[i].Real;
+                        endEffectorPosition = new Vector3(ConvertDoubleToFloat(x), ConvertDoubleToFloat(z), ConvertDoubleToFloat(y));
+                        Debug.Log(x + "  " + y + "  " + z);
+                    }
                 }
+            }
+    }
+
+    private double zn, A, B, C;
+    private double x_, y_;
+    private double a_, b_, c_, d_, e_, f_;
+
+    private void InitSingularity()
+    {
+        zn = -L * Math.Sin(ConvertDegreesToRadians(thetas[0]));
+        A = 1;
+        B = -2 * zn;
+        InitX_Y_();
+        C = zn * zn - l * l + Math.Pow(x_ - centresCircles[0].x, 2) + Math.Pow(y_ - centresCircles[0].y, 2);
+    }
+
+    private void InitX_Y_()
+    {
+        a_ = 2 * (centresCircles[2].x - centresCircles[0].x);
+        b_ = 2 * (centresCircles[2].y - centresCircles[0].y);
+        c_ = Math.Pow(l, 2) - Math.Pow(l, 2) - Math.Pow(centresCircles[0].x, 2) - Math.Pow(centresCircles[0].y, 2) + Math.Pow(centresCircles[2].x, 2) +
+            Math.Pow(centresCircles[2].y, 2);
+        d_ = 2 * (centresCircles[2].x - centresCircles[1].x);
+        e_ = 2 * (centresCircles[2].y - centresCircles[1].y);
+        f_ = Math.Pow(l, 2) - Math.Pow(l, 2) - Math.Pow(centresCircles[1].x, 2) - Math.Pow(centresCircles[1].y, 2) + Math.Pow(centresCircles[2].x, 2) +
+            Math.Pow(centresCircles[2].y, 2);
+
+        x_ = (c_ * e_ - b_ * f_) / (a_ * e_ - b_ * d_);
+        y_ = (a_ * f_ - c_ * d_) / (a_ * e_ - b_ * d_);
+    }
+
+    private void ResolveSingularity()
+    {
+        InitSingularity();
+
+        double[] coefs = new double[3] { C, B, A };
+        System.Numerics.Complex[] roots = FindRoots.Polynomial(coefs);
+        for(int i=0; i < roots.Length; i++)
+        {
+            if (roots[i].Imaginary == 0 && roots[i].Real < 0)
+            {
+                endEffectorPosition = new Vector3(ConvertDoubleToFloat(x_), ConvertDoubleToFloat(roots[i].Real), ConvertDoubleToFloat(y_));
+                Debug.Log("singularity " + endEffectorPosition);
             }
         }
     }

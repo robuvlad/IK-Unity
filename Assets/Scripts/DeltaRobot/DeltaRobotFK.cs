@@ -76,8 +76,8 @@ public class DeltaRobotFK : MonoBehaviour
     private void InitThetas()
     {
         thetas = new double[NO_OF_LEGS];
-        thetas[0] = 38;
-        thetas[1] = 22;
+        thetas[0] = 12;
+        thetas[1] = -20;
         thetas[2] = 15;
     }
 
@@ -87,10 +87,9 @@ public class DeltaRobotFK : MonoBehaviour
             sliders[i].minValue = DeltaRobotFKUtils.SLIDER_MIN_VALUE;
             sliders[i].maxValue = DeltaRobotFKUtils.SLIDER_MAX_VALUE;
         }    
-        sliders[0].value = 38.0f;
-        sliders[1].value = 22.0f;
-        sliders[2].value = 15.0f;
-        //38, 28, 12
+        sliders[0].value = ConvertDoubleToFloat(thetas[0]);
+        sliders[1].value = ConvertDoubleToFloat(thetas[1]);
+        sliders[2].value = ConvertDoubleToFloat(thetas[2]);
     }
 
     private void DoForwardKinematics()

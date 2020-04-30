@@ -58,9 +58,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\DeltaRobot\DeltaRobotFK.cs" />
-    <Compile Include="Assets\Scripts\DeltaRobot\DeltaRobotFKUtils.cs" />
     <Compile Include="Assets\Scripts\DeltaRobot\DeltaRobotIK.cs" />
-    <Compile Include="Assets\Scripts\DeltaRobot\DeltaRobotIKUtils.cs" />
+    <Compile Include="Assets\Scripts\DeltaRobot\init\IInitialize.cs" />
+    <Compile Include="Assets\Scripts\DeltaRobot\init\ServiceInitializer.cs" />
+    <Compile Include="Assets\Scripts\DeltaRobot\logic\LegsGenerator.cs" />
+    <Compile Include="Assets\Scripts\DeltaRobot\logic\LegsRotation.cs" />
+    <Compile Include="Assets\Scripts\DeltaRobot\utils\DeltaRobotFKUtils.cs" />
+    <Compile Include="Assets\Scripts\DeltaRobot\utils\DeltaRobotIKUtils.cs" />
+    <Compile Include="Assets\Scripts\DeltaRobot\utils\IConverter.cs" />
+    <Compile Include="Assets\Scripts\DeltaRobot\utils\ServiceConverter.cs" />
     <Compile Include="Assets\Scripts\FabricIK.cs" />
     <Compile Include="Assets\Scripts\GraphicalIK.cs" />
     <Compile Include="Assets\Scripts\Position.cs" />

@@ -11,34 +11,34 @@ using UnityEngine.UI;
 public class DeltaRobotIK : MonoBehaviour
 {
     [Header("Triangle Points")]
-    [SerializeField] Transform[] topVerticesPoints = null;
-    [SerializeField] Transform[] BPoints = null;
-    [SerializeField] Transform[] PPoints = null;
+    [SerializeField] Transform[] topVerticesPoints = null;      // vertices points from the top triangle / platform
+    [SerializeField] Transform[] BPoints = null;                // B points from the top triangle / platform = middle side points
+    [SerializeField] Transform[] PPoints = null;                // P points = vertices points from the bottom triangle / platform
 
     [Header("Legs")]
-    [SerializeField] Transform[] topLPivots = null;
-    [SerializeField] Transform[] parallelograms = null;
+    [SerializeField] Transform[] topLPivots = null;             // top pivots used for rotation
+    [SerializeField] Transform[] parallelograms = null;         // 6 legs to form 3 parallelograms
 
     [Header("End Effector")]
-    [SerializeField] Transform endEffector = null;
+    [SerializeField] Transform endEffector = null;              // end Effector = mobile platform = bottom platform
 
     [Header("UI Sliders")]
-    [SerializeField] Slider[] sliders = null;
+    [SerializeField] Slider[] sliders = null;                   // GUI sliders for changing the end effector position
 
-    private double W_B, U_B, S_B;
-    private double W_P, U_P, S_P;
-    private double[] thetas;
-    private double L;
-    private double l;
+    private double W_B, U_B, S_B;                               // configuration values for the top triangle / platform
+    private double W_P, U_P, S_P;                               // configuration values for the bottom triangle / platform
+    private double[] thetas;                                    // final angles to be calculated
+    private double L;                                           // length of the upper part of the legs
+    private double l;                                           // length of the bottom part of the legs
 
-    private double[] Ei;
-    private double[] Fi;
-    private double[] Gi;
+    private double[] Ei;                                        // variable equation
+    private double[] Fi;                                        // variable equation
+    private double[] Gi;                                        // variable equation
 
-    private ServiceConverter serviceConverter;
-    private ServiceInitializer serviceInitializer;
-    private LegsGenerator legsGenerator;
-    private LegsRotation legsRotation;
+    private ServiceConverter serviceConverter;                  // contains converters: radians, degrees, double, float
+    private ServiceInitializer serviceInitializer;              // initialize the base values, siders
+    private LegsGenerator legsGenerator;                        // generates the roots for the last equation
+    private LegsRotation legsRotation;                          // rotate the whole legs
 
     private void Start()
     {

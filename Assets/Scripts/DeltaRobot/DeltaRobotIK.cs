@@ -99,7 +99,7 @@ public class DeltaRobotIK : MonoBehaviour
             double roots = legsGenerator.GetRootsTi(currentFi, currentEi, currentGi);
             thetas[i] = 2 * Math.Atan(roots);
         }
-        legsRotation.RotateLegs(thetas);
+        legsRotation.RotateLegs(thetas, false);
         legsRotation.RotateParallelograms();
     }
 

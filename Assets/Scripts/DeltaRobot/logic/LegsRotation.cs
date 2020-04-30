@@ -26,11 +26,19 @@ namespace Assets.Scripts.DeltaRobot.ik
             this.endEffector = endEffector;
         }
 
-        public void RotateLegs(double[] thetas)
+        public void RotateLegs(double[] thetas, Boolean areDegrees)
         {
-            double angle1_d = serviceConverter.ConvertRadiansToDegrees(thetas[0]);
-            double angle2_d = serviceConverter.ConvertRadiansToDegrees(thetas[1]);
-            double angle3_d = serviceConverter.ConvertRadiansToDegrees(thetas[2]);
+            double angle1_d, angle2_d, angle3_d;
+            if (areDegrees == false)
+            {
+                angle1_d = serviceConverter.ConvertRadiansToDegrees(thetas[0]);
+                angle2_d = serviceConverter.ConvertRadiansToDegrees(thetas[1]);
+                angle3_d = serviceConverter.ConvertRadiansToDegrees(thetas[2]);
+            } else {
+                angle1_d = thetas[0];
+                angle2_d = thetas[1];
+                angle3_d = thetas[2];
+            }
 
             float angle1 = serviceConverter.ConvertDoubleToFloat(angle1_d);
             float angle2 = serviceConverter.ConvertDoubleToFloat(angle2_d);

@@ -59,7 +59,17 @@ namespace Assets.Scripts.DeltaRobot.init
 
         public void InitSliderValuesFK()
         {
-
+            for (int i = 0; i < DeltaRobotFKUtils.NO_OF_LEGS; i++)
+            {
+                sliders[i].minValue = DeltaRobotFKUtils.SLIDER_MIN_VALUE;
+                sliders[i].maxValue = DeltaRobotFKUtils.SLIDER_MAX_VALUE;
+            }
+            sliders[0].value = serviceConverter.ConvertDoubleToFloat(DeltaRobotFKUtils.VALUE_THETA_1);
+            sliders[1].value = serviceConverter.ConvertDoubleToFloat(DeltaRobotFKUtils.VALUE_THETA_2);
+            sliders[2].value = serviceConverter.ConvertDoubleToFloat(DeltaRobotFKUtils.VALUE_THETA_3);
+            /*sliders[0].value = serviceConverter.ConvertDoubleToFloat(thetas[0]);
+            sliders[1].value = serviceConverter.ConvertDoubleToFloat(thetas[1]);
+            sliders[2].value = serviceConverter.ConvertDoubleToFloat(thetas[2]);*/
         }
     }
 }

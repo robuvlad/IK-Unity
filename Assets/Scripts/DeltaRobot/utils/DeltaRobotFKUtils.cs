@@ -16,6 +16,10 @@ namespace Assets.Scripts.DeltaRobot
         public static float SLIDER_MIN_VALUE = -45.0f;
         public static float SLIDER_MAX_VALUE = 45.0f;
 
+        public static double VALUE_THETA_1 = 20.0f;
+        public static double VALUE_THETA_2 = -20.0f;
+        public static double VALUE_THETA_3 = 15.0f;
+
         public static int FIRST_ROW_NUMBER = 2;
         public static int FIRST_COLUMN_NUMBER = 3;
         public static int SECOND_NUMBER = 2;

@@ -74,12 +74,17 @@
     <Compile Include="Assets\Scripts\others\Position.cs" />
     <Compile Include="Assets\Scripts\others\SphericalWristFK.cs" />
     <Compile Include="Assets\Scripts\StewartPlatform\init\IInitialize.cs" />
+    <Compile Include="Assets\Scripts\StewartPlatform\init\ServiceInitializerFK.cs" />
     <Compile Include="Assets\Scripts\StewartPlatform\init\ServiceInitializerIK.cs" />
+    <Compile Include="Assets\Scripts\StewartPlatform\logic\ForwardKinematics.cs" />
     <Compile Include="Assets\Scripts\StewartPlatform\logic\InverseKinematics.cs" />
     <Compile Include="Assets\Scripts\StewartPlatform\rotation\IRotation.cs" />
+    <Compile Include="Assets\Scripts\StewartPlatform\rotation\ServiceRotationFK.cs" />
     <Compile Include="Assets\Scripts\StewartPlatform\rotation\ServiceRotationIK.cs" />
     <Compile Include="Assets\Scripts\StewartPlatform\StewartPlatformFK.cs" />
     <Compile Include="Assets\Scripts\StewartPlatform\StewartPlatformIK.cs" />
+    <Compile Include="Assets\Scripts\StewartPlatform\utils\StewartPlatformFKConverter.cs" />
+    <Compile Include="Assets\Scripts\StewartPlatform\utils\StewartPlatformFKUtils.cs" />
     <Compile Include="Assets\Scripts\StewartPlatform\utils\StewartPlatformIKUtils.cs" />
     <None Include="Assets\Packages\netstandard2.0\MathNet.Numerics.xml" />
     <Reference Include="Unity.Timeline.Editor">

@@ -25,7 +25,7 @@ public class StewartPlatformIK : MonoBehaviour
     [SerializeField] Transform[] finalLegs = null;                                  // upper part of each leg -> game objects
 
     [Header("Children GO")]
-    [SerializeField] Transform[] children = null;                                   // transitional parts for each leg
+    [SerializeField] Transform[] children = null;                                   // transition parts for each leg
 
     [Header("UI")]
     [SerializeField] Slider[] sliders = null;                                       // slider for each dof -> 6 sliders
@@ -36,7 +36,7 @@ public class StewartPlatformIK : MonoBehaviour
     private float phi_roll = 0.0f, theta_pitch = 0.0f, psi_yaw = 0.0f;              // initial values for rotation
 
     private ServiceInitializerIK serviceInitializer;                                // initialize the system variables, e.g. sliders
-    private ServiceRotationIK serviceRotation;                                      // rotate each legs towards target
+    private ServiceRotationIK serviceRotation;                                      // rotate each leg towards target
     private InverseKinematics inverseKinematics;                                    // do the logic for inverse kinematics algorithm
 
     void Start()

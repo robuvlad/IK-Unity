@@ -625,6 +625,118 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389517352}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1475524481 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6471350496724266102, guid: 68bb2f7761adf0a4f8e9a707d5d33303,
+    type: 3}
+  m_PrefabInstance: {fileID: 6471350495688814031}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1475524482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475524481}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dff2995971903d4098594251b45c445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endEffector: {fileID: 1672934500}
+  bottomLegs:
+  - {fileID: 1672934519}
+  - {fileID: 1672934518}
+  - {fileID: 1672934517}
+  - {fileID: 1672934516}
+  - {fileID: 1672934515}
+  - {fileID: 1672934514}
+  topLegs:
+  - {fileID: 1672934522}
+  - {fileID: 1672934521}
+  - {fileID: 1672934520}
+  - {fileID: 515399751}
+  - {fileID: 325434786}
+  - {fileID: 163407297}
+  children:
+  - {fileID: 1672934507}
+  - {fileID: 1672934506}
+  - {fileID: 1672934505}
+  - {fileID: 1672934504}
+  - {fileID: 1672934503}
+  - {fileID: 1672934502}
+  finalLegs:
+  - {fileID: 1672934513}
+  - {fileID: 1672934512}
+  - {fileID: 1672934511}
+  - {fileID: 1672934510}
+  - {fileID: 1672934509}
+  - {fileID: 1672934508}
+  childrenFinal:
+  - {fileID: 1771596643}
+  - {fileID: 1855722897}
+  - {fileID: 2056124051}
+  - {fileID: 1705329729}
+  - {fileID: 1870285323}
+  - {fileID: 2030822270}
+  sliders:
+  - {fileID: 75421754}
+  - {fileID: 1982451192}
+  - {fileID: 1824385906}
+  - {fileID: 917263195}
+  - {fileID: 95866919}
+  - {fileID: 930175177}
+  menu: {fileID: 989094513}
+--- !u!114 &1475524483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475524481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 016a2c882e605b2408ab317dee453161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endEffector: {fileID: 1672934500}
+  baseEffector: {fileID: 1672934501}
+  bottomLegs:
+  - {fileID: 1672934519}
+  - {fileID: 1672934518}
+  - {fileID: 1672934517}
+  - {fileID: 1672934516}
+  - {fileID: 1672934515}
+  - {fileID: 1672934514}
+  topLegs:
+  - {fileID: 1672934522}
+  - {fileID: 1672934521}
+  - {fileID: 1672934520}
+  - {fileID: 515399751}
+  - {fileID: 325434786}
+  - {fileID: 163407297}
+  finalLegs:
+  - {fileID: 1672934513}
+  - {fileID: 1672934512}
+  - {fileID: 1672934511}
+  - {fileID: 1672934510}
+  - {fileID: 1672934509}
+  - {fileID: 1672934508}
+  children:
+  - {fileID: 1672934507}
+  - {fileID: 1672934506}
+  - {fileID: 1672934505}
+  - {fileID: 1672934504}
+  - {fileID: 1672934503}
+  - {fileID: 1672934502}
+  sliders:
+  - {fileID: 211369908}
+  - {fileID: 211369907}
+  - {fileID: 211369906}
+  - {fileID: 211369905}
+  - {fileID: 211369904}
+  - {fileID: 211369903}
+  menu: {fileID: 180420148}
 --- !u!1001 &1672934499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1651,5 +1763,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: RunningScripts
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6471350496724266101, guid: 68bb2f7761adf0a4f8e9a707d5d33303, type: 3}
+    - {fileID: 6471350496724266099, guid: 68bb2f7761adf0a4f8e9a707d5d33303, type: 3}
+    - {fileID: 6471350496724266098, guid: 68bb2f7761adf0a4f8e9a707d5d33303, type: 3}
+    - {fileID: 6471350496724266097, guid: 68bb2f7761adf0a4f8e9a707d5d33303, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 68bb2f7761adf0a4f8e9a707d5d33303, type: 3}

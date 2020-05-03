@@ -46,12 +46,62 @@ public class DeltaRobotIK : MonoBehaviour
         serviceInitializer.InitTriangles();
         SetupRobotStructure();
         serviceInitializer.InitSliderValuesIK();
+
+        StartCoroutine(MoveDeltaRobot());
     }
 
     private void Update()
     {
         DoInverseKinematics();
         UpdateEndEffectorPosition();
+    }
+
+    IEnumerator MoveDeltaRobot()
+    {
+        while (true)
+        {
+            StartCoroutine(PickAndPlace());
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_BOXES);
+        }
+    }
+
+    IEnumerator PickAndPlace()
+    {
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_RIGHT; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[0].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for(int i=0; i < DeltaRobotIKUtils.MOVE_DOWN; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[2].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_UP; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[2].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_LEFT; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[0].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_DOWN; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[2].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for(int i = 0; i < DeltaRobotIKUtils.MOVE_UP; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[2].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_RIGHT; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[0].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
     }
 
     private void SetupVariables()

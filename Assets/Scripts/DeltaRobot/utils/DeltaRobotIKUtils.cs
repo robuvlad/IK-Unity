@@ -23,7 +23,18 @@ namespace Assets.Scripts.DeltaRobot
 
         public static float Z_MIN_VALUE = -5.5f;
         public static float Z_MAX_VALUE = -2.5f;
-        public static float Z_INITIAL_VALUE = -4.0f;
+        public static float Z_INITIAL_VALUE = -3.0f;
+
+
+        public static float TIME_BETWEEN_BOXES = 5.0f;
+        public static float TIME_BETWEEN_MOTION = 0.005f;
+
+        public static int MOVE_DOWN = 20;
+        public static int MOVE_UP = 20;
+        public static int MOVE_RIGHT = 20;
+        public static int MOVE_LEFT = 40;
+
+        public static float SLIDER_INCREMENT = 0.1f;
 
     }
 }

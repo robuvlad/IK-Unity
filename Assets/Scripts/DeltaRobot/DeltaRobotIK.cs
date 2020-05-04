@@ -56,54 +56,6 @@ public class DeltaRobotIK : MonoBehaviour
         UpdateEndEffectorPosition();
     }
 
-    IEnumerator MoveDeltaRobot()
-    {
-        while (true)
-        {
-            StartCoroutine(PickAndPlace());
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_BOXES);
-        }
-    }
-
-    IEnumerator PickAndPlace()
-    {
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_RIGHT; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[0].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for(int i=0; i < DeltaRobotIKUtils.MOVE_DOWN; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[2].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_UP; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[2].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_LEFT; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[0].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_DOWN; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[2].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for(int i = 0; i < DeltaRobotIKUtils.MOVE_UP; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[2].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_RIGHT; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[0].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-    }
-
     private void SetupVariables()
     {
         serviceConverter = new ServiceConverter();
@@ -179,7 +131,56 @@ public class DeltaRobotIK : MonoBehaviour
     {
         return (W_P - (1.0 / 2.0) * W_B);
     }
-    
+
+    IEnumerator MoveDeltaRobot()
+    {
+        while (DeltaRobotIKUtils.NO_OF_TOYS > 0)
+        {
+            StartCoroutine(PickAndPlace());
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_BOXES);
+            DeltaRobotIKUtils.NO_OF_TOYS -= 1;
+        }
+    }
+
+    IEnumerator PickAndPlace()
+    {
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_RIGHT; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[0].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_DOWN; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[2].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_UP; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[2].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_LEFT; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[0].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_DOWN; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[2].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_UP; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[2].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+        for (int i = 0; i < DeltaRobotIKUtils.MOVE_RIGHT; i++)
+        {
+            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
+            sliders[0].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.DeltaRobot;
+using Assets.Scripts.DeltaRobot.drawing;
 using Assets.Scripts.DeltaRobot.ik;
 using Assets.Scripts.DeltaRobot.init;
 using Assets.Scripts.DeltaRobot.logic;
@@ -47,17 +48,23 @@ public class DeltaRobotFK : MonoBehaviour
     private LegsRotation legsRotation;                                      // rotate the whole legs
     private SpheresCreation circlesCreation;                                // creates the invisible spheres and resolve the final equation
 
+    private LineRenderer line;                                              // line renderer component used for drawing / painting simulation
+    private DrawingSimulation simulation;                                   // simulation of the FK algorithm
+
     void Start()
     {
         Setup();
         serviceInitializer.InitTriangles();
         SetupRobotStructure();
         serviceInitializer.InitSliderValuesFK();
+
+        SetupLineRenderer();
     }
 
     void Update()
     {
         DoForwardKinematics();
+        simulation.DrawLines();
     }
 
     private void Setup()
@@ -114,6 +121,15 @@ public class DeltaRobotFK : MonoBehaviour
         thetas[0] = sliders[0].value;
         thetas[1] = sliders[1].value;
         thetas[2] = sliders[2].value;
+    }
+
+    private void SetupLineRenderer()
+    {
+        line = GetComponent<LineRenderer>();
+        line.startWidth = 0.05f;
+        line.endWidth = 0.05f;
+
+        simulation = new DrawingSimulation(sliders, line, endEffector);
     }
 
     private void OnDrawGizmos()

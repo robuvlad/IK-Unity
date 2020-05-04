@@ -114,7 +114,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 494}
   m_MaxSize: {x: 14004, y: 14044}
   vertical: 0
-  controlID: 129
+  controlID: 57
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -305,15 +305,15 @@ MonoBehaviour:
   m_MaximizeOnPlay: 0
   m_Gizmos: 0
   m_Stats: 0
-  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_SelectedSizes: 05000000000000000000000000000000000000000000000000000000000000000000000000000000
   m_TargetDisplay: 0
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -373.2
-    m_HBaseRangeMax: 373.2
+    m_HBaseRangeMin: -300.80002
+    m_HBaseRangeMax: 300.80002
     m_VBaseRangeMin: -169.2
     m_VBaseRangeMax: 169.2
     m_HAllowExceedBaseRangeMin: 1
@@ -385,8 +385,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 90310000
-      m_LastClickedID: 12688
+      m_SelectedIDs: 
+      m_LastClickedID: 0
       m_ExpandedIDs: 76fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -447,9 +447,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.8720832, y: 5.3777885, z: 1.2268255}
+    m_Target: {x: -0.39702392, y: 3.0304065, z: 19.179852}
     speed: 2
-    m_Value: {x: 1.8720832, y: 5.3777885, z: 1.2268255}
+    m_Value: {x: -0.39702392, y: 3.0304065, z: 19.179852}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -478,13 +478,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.24876851, y: 0.0014493037, z: -0.0003455034, w: 0.9686058}
+    m_Target: {x: 0.12348346, y: -0.040185362, z: 0.0050491043, w: 0.99156386}
     speed: 2
-    m_Value: {x: 0.24875793, y: 0.001449242, z: -0.0003454887, w: 0.96856457}
+    m_Value: {x: 0.12347807, y: -0.040183607, z: 0.005048884, w: 0.9915206}
   m_Size:
-    m_Target: 9.884401
+    m_Target: 27.823187
     speed: 2
-    m_Value: 9.884401
+    m_Value: 27.823187
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -538,7 +538,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 86022
+  m_LastSelectedObjectID: 102108
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -668,20 +668,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Materials
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 84
   m_LastFolders:
-  - Assets/Materials
+  - Assets/Scenes
   m_LastFoldersGridSize: 84
   m_LastProjectPath: D:\FACULTATE\LICENTA\IK - Unity\InverseKinomatics
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ac300000
-    m_LastClickedID: 12460
-    m_ExpandedIDs: 00000000f42c00002a2d0000a42d0000202f00003a3000009c300000d83000002236000024360000263600002836000000ca9a3b
+    m_SelectedIDs: 18300000
+    m_LastClickedID: 12312
+    m_ExpandedIDs: 00000000f22c0000282d00009e2d00001c2f000098300000d43000001e36000020360000223600002436000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -709,7 +709,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000f42c00002a2d0000a42d0000202f00003a3000009c300000d830000022360000243600002636000028360000
+    m_ExpandedIDs: 00000000f22c0000282d00009e2d00001c2f000098300000d43000001e360000203600002236000024360000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.StewartPlatform.init;
 using Assets.Scripts.StewartPlatform.logic;
 using Assets.Scripts.StewartPlatform.rotation;
+using Assets.Scripts.StewartPlatform.simulation;
 using Assets.Scripts.StewartPlatform.utils;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra;
@@ -41,15 +42,19 @@ public class StewartPlatformFK : MonoBehaviour
     private ServiceRotationFK serviceRotation;                              // rotate each leg towards target
     private ForwardKinematics forwardKinematics;                            // do the logic for forward kinematics algorithm
 
+    private FlySimulation simulation;                                       // simulate a plane flying
+
     void Start()
     {
         SetupMenu();
-        Initialize();   
+        Initialize();
+        SetupSimulation();
     }
 
     void Update()
     {
         forwardKinematics.DoForwardKinematics();
+        simulation.Fly();
     }
 
     private void SetupMenu()
@@ -71,5 +76,10 @@ public class StewartPlatformFK : MonoBehaviour
         forwardKinematics = ScriptableObject.CreateInstance<ForwardKinematics>();
         forwardKinematics.Init(serviceConverter, children, childrenFinal, bottomLegs, endEffector, sliders);
         forwardKinematics.SetupVariables();
+    }
+
+    private void SetupSimulation()
+    {
+        simulation = new FlySimulation(sliders);
     }
 }

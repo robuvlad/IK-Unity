@@ -26,6 +26,9 @@ public class DeltaRobotIK : MonoBehaviour
     [Header("UI Sliders")]
     [SerializeField] Slider[] sliders = null;                   // GUI sliders for changing the end effector position
 
+    [Header ("Pick and Place Simulation")]
+    [SerializeField] GameObject trajectory = null;
+
     private double W_B, U_B, S_B;                               // configuration values for the top triangle / platform
     private double W_P, U_P, S_P;                               // configuration values for the bottom triangle / platform
     private double[] thetas;                                    // final angles to be calculated
@@ -42,6 +45,7 @@ public class DeltaRobotIK : MonoBehaviour
     private LegsRotation legsRotation;                          // rotate the whole legs
     private PickAndPlaceSimulation simulation;                  // pick and place simulation for IK method
 
+
     private const int TOTAL_NO_JOINTS = 3;
 
     private void Start()
@@ -51,7 +55,7 @@ public class DeltaRobotIK : MonoBehaviour
         SetupRobotStructure();
         serviceInitializer.InitSliderValuesIK();
 
-        simulation.Init(sliders);
+        simulation.Init(sliders, trajectory, endEffector);   
     }
 
     private void Update()

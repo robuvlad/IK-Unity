@@ -28,7 +28,7 @@ namespace Assets.Scripts.DeltaRobot
 
         public static int NO_OF_TOYS = 7;
 
-        public static float TIME_BETWEEN_BOXES = 3.5f;
+        public static float TIME_BETWEEN_BOXES = 4.5f;
         public static float TIME_BETWEEN_MOTION = 0.005f;
 
         public static int MOVE_DOWN = 20;

@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\DeltaRobot\logic\SingularityAppearance.cs" />
     <Compile Include="Assets\Scripts\DeltaRobot\logic\SpheresCreation.cs" />
     <Compile Include="Assets\Scripts\DeltaRobot\pick_and_place\AnotherBox.cs" />
+    <Compile Include="Assets\Scripts\DeltaRobot\pick_and_place\PickAndPlaceSimulation.cs" />
     <Compile Include="Assets\Scripts\DeltaRobot\pick_and_place\Touch.cs" />
     <Compile Include="Assets\Scripts\DeltaRobot\utils\DeltaRobotFKUtils.cs" />
     <Compile Include="Assets\Scripts\DeltaRobot\utils\DeltaRobotIKUtils.cs" />

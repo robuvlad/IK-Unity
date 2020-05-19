@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.DeltaRobot;
 using Assets.Scripts.DeltaRobot.ik;
 using Assets.Scripts.DeltaRobot.init;
+using Assets.Scripts.DeltaRobot.pick_and_place;
 using Assets.Scripts.DeltaRobot.utils;
 using System;
 using System.Collections;
@@ -39,6 +40,9 @@ public class DeltaRobotIK : MonoBehaviour
     private ServiceInitializer serviceInitializer;              // initialize the base values, siders
     private LegsGenerator legsGenerator;                        // generates the roots for the last equation
     private LegsRotation legsRotation;                          // rotate the whole legs
+    private PickAndPlaceSimulation simulation;                  // pick and place simulation for IK method
+
+    private const int TOTAL_NO_JOINTS = 3;
 
     private void Start()
     {
@@ -47,7 +51,7 @@ public class DeltaRobotIK : MonoBehaviour
         SetupRobotStructure();
         serviceInitializer.InitSliderValuesIK();
 
-        StartCoroutine(MoveDeltaRobot());
+        simulation.Init(sliders);
     }
 
     private void Update()
@@ -62,10 +66,12 @@ public class DeltaRobotIK : MonoBehaviour
         serviceInitializer = ScriptableObject.CreateInstance<ServiceInitializer>();
         serviceInitializer.Init(serviceConverter, topVerticesPoints, PPoints, sliders);
 
-        thetas = new double[3] { 0.0, 0.0, 0.0 };
-        Ei = new double[3];
-        Fi = new double[3];
-        Gi = new double[3];
+        simulation = gameObject.AddComponent<PickAndPlaceSimulation>();
+
+        thetas = new double[TOTAL_NO_JOINTS] { 0.0, 0.0, 0.0 };
+        Ei = new double[TOTAL_NO_JOINTS];
+        Fi = new double[TOTAL_NO_JOINTS];
+        Gi = new double[TOTAL_NO_JOINTS];
         L = DeltaRobotIKUtils.L;
         l = DeltaRobotIKUtils.l;
     }
@@ -130,55 +136,6 @@ public class DeltaRobotIK : MonoBehaviour
     private double Get_c()
     {
         return (W_P - (1.0 / 2.0) * W_B);
-    }
-
-    IEnumerator MoveDeltaRobot()
-    {
-        while (DeltaRobotIKUtils.NO_OF_TOYS > 0)
-        {
-            StartCoroutine(PickAndPlace());
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_BOXES);
-            DeltaRobotIKUtils.NO_OF_TOYS -= 1;
-        }
-    }
-
-    IEnumerator PickAndPlace()
-    {
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_RIGHT; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[0].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_DOWN; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[2].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_UP; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[2].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_LEFT; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[0].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_DOWN; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[2].value -= DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_UP; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[2].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
-        for (int i = 0; i < DeltaRobotIKUtils.MOVE_RIGHT; i++)
-        {
-            yield return new WaitForSeconds(DeltaRobotIKUtils.TIME_BETWEEN_MOTION);
-            sliders[0].value += DeltaRobotIKUtils.SLIDER_INCREMENT;
-        }
     }
 
     private void OnDrawGizmos()

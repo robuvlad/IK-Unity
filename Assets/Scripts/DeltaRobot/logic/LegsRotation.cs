@@ -17,6 +17,10 @@ namespace Assets.Scripts.DeltaRobot.ik
         private Transform[] PPoints;
         private Transform endEffector;
 
+        private const float X_TRANSLATION_FIRST_P = 0.5f;
+        private const float X_TRANSLATION_SECOND_P = 0.25f;
+        private const float Z_TRANSLATION = 0.4325f;
+
         public void Init(ServiceConverter serviceConverter, Transform[] topLPivots, Transform[] parallelograms, Transform[] PPoints, Transform endEffector)
         {
             this.serviceConverter = serviceConverter;
@@ -64,7 +68,7 @@ namespace Assets.Scripts.DeltaRobot.ik
 
         private Vector3 GetFirstParallelogram()
         {
-            float x = -(parallelograms[0].position.x - PPoints[0].position.x - 0.5f);
+            float x = -(parallelograms[0].position.x - PPoints[0].position.x - X_TRANSLATION_FIRST_P);
             float y = -(parallelograms[0].position.y - endEffector.position.y);
             float z = PPoints[0].position.z - parallelograms[0].position.z;
             Vector3 target = new Vector3(x, y, z);
@@ -73,18 +77,18 @@ namespace Assets.Scripts.DeltaRobot.ik
 
         private Vector3 GetSecondParallelogram()
         {
-            float x = -(parallelograms[2].position.x - PPoints[1].position.x + 0.25f);
+            float x = -(parallelograms[2].position.x - PPoints[1].position.x + X_TRANSLATION_SECOND_P);
             float y = -(parallelograms[2].position.y - endEffector.position.y);
-            float z = -(parallelograms[2].position.z - PPoints[1].position.z - 0.4325f);
+            float z = -(parallelograms[2].position.z - PPoints[1].position.z - Z_TRANSLATION);
             Vector3 target = new Vector3(x, y, z);
             return target;
         }
 
         private Vector3 GetThirdParallelogram()
         {
-            float x = PPoints[2].position.x - parallelograms[4].position.x - 0.25f;
+            float x = PPoints[2].position.x - parallelograms[4].position.x - X_TRANSLATION_SECOND_P;
             float y = -(parallelograms[4].position.y - endEffector.position.y);
-            float z = -(parallelograms[4].position.z - PPoints[2].position.z + 0.4325f);
+            float z = -(parallelograms[4].position.z - PPoints[2].position.z + Z_TRANSLATION);
             Vector3 target = new Vector3(x, y, z);
             return target;
         }

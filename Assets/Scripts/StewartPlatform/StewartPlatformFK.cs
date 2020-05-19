@@ -33,6 +33,8 @@ public class StewartPlatformFK : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] Slider[] sliders = null;                               // slider for each dof -> 6 sliders
+    [SerializeField] GameObject[] childrenCylinders = null;                         // children cylinders -> update the current material
+    [SerializeField] Material[] legMaterials = null;                        // for updating the current leg material / color
 
     [Header("Canvas")]
     [SerializeField] GameObject menu = null;                                // canvas menu for activation / deactivation which controls the sliders
@@ -54,7 +56,8 @@ public class StewartPlatformFK : MonoBehaviour
     void Update()
     {
         forwardKinematics.DoForwardKinematics();
-        simulation.Fly();
+        simulation.CheckError();
+        //simulation.Fly();
     }
 
     private void SetupMenu()
@@ -74,12 +77,13 @@ public class StewartPlatformFK : MonoBehaviour
         serviceRotation.RotateLegs();
 
         forwardKinematics = ScriptableObject.CreateInstance<ForwardKinematics>();
-        forwardKinematics.Init(serviceConverter, children, childrenFinal, bottomLegs, endEffector, sliders);
+        forwardKinematics.Init(serviceConverter, children, childrenFinal, bottomLegs, endEffector, sliders, 
+            StewartPlatformFKUtils.A_Matrix, StewartPlatformFKUtils.B_Matrix);
         forwardKinematics.SetupVariables();
     }
 
     private void SetupSimulation()
     {
-        simulation = new FlySimulation(sliders);
+        simulation = new FlySimulation(sliders, childrenFinal, childrenCylinders, legMaterials);
     }
 }

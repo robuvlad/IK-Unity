@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.StewartPlatform.init;
 using Assets.Scripts.StewartPlatform.logic;
 using Assets.Scripts.StewartPlatform.rotation;
+using Assets.Scripts.StewartPlatform.simulation;
 using Assets.Scripts.StewartPlatform.utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ public class StewartPlatformIK : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] Slider[] sliders = null;                                       // slider for each dof -> 6 sliders
+    [SerializeField] GameObject[] panels = null;                                    // panels for image display
 
     [Header("Canvas")]
     [SerializeField] GameObject menu = null;                                        // canvas menu for activation / deactivation which controls the sliders
@@ -39,14 +41,19 @@ public class StewartPlatformIK : MonoBehaviour
     private ServiceRotationIK serviceRotation;                                      // rotate each leg towards target
     private InverseKinematics inverseKinematics;                                    // do the logic for inverse kinematics algorithm
 
+    private BallSimulation ballSimulation;                                          // ball simulation class to enable / disable sliders
+    private PanelDrawing panelDrawing;
+
     void Start()
     {
         ShowMenu();
         Init();
+        panelDrawing.SetPanelsDisabled();
     }
 
     void Update()
     {
+        ballSimulation.CheckValues();
         serviceRotation.RotateLegs();
 
         inverseKinematics.Init(topLegs, bottomLegs, finalLegs, children, endEffector, baseEffector);
@@ -69,11 +76,18 @@ public class StewartPlatformIK : MonoBehaviour
         serviceRotation.Init(topLegs, bottomLegs);
 
         inverseKinematics = ScriptableObject.CreateInstance<InverseKinematics>();
+        ballSimulation = new BallSimulation(sliders);
+        panelDrawing = new PanelDrawing(panels);
     }
 
     private void SetEndEffectorPosition(float xPos, float yPos, float zPos, float xRot, float yRot, float zRot)
     {
         endEffector.position = new Vector3(xPos, yPos, zPos);
         endEffector.rotation = Quaternion.Euler(xRot, yRot, zRot);
+    }
+
+    public void ShowPanel(int value)
+    {
+        panelDrawing.ShowPanel(value);
     }
 }

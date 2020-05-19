@@ -25,7 +25,7 @@ namespace Assets.Scripts.StewartPlatform.init
             {
                 sliders[i].minValue = StewartPlatformFKUtils.SLIDER_MIN_VALUE;
                 sliders[i].maxValue = StewartPlatformFKUtils.SLIDER_MAX_VALUE;
-                sliders[i].enabled = false;
+                //sliders[i].enabled = false;
             }
         }
     }

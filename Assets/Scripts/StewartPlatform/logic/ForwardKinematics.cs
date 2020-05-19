@@ -22,12 +22,13 @@ namespace Assets.Scripts.StewartPlatform.logic
 
         private double[] variables = null;
         private Matrix<double> finalPosition = null;
-        private Matrix<double> A_Matrix = Matrix<double>.Build.DenseOfArray(new double[,] { { 1.77, 1.77, 0 }, { 1.77, -1.77, 0 }, { 0.65, -2.42, 0 }, { -2.42, -0.65, 0 }, { -2.42, 0.65, 0 }, { 0.65, 2.42, 0 } });
-        private Matrix<double> B_Matrix = Matrix<double>.Build.DenseOfArray(new double[,] { { 4.83, 1.29, 0 }, { 4.83, -1.3, 0 }, { -1.3, -4.83, 0 }, { -3.54, -3.53, 0 }, { -3.53, 3.54, 0 }, { -1.29, 4.83, 0 } });
+        private Matrix<double> A_Matrix = null;
+        private Matrix<double> B_Matrix = null;
 
         private StewartPlatformFKConverter serviceConverter;
 
-        public void Init(StewartPlatformFKConverter serviceConverter, Transform[] children, Transform[] childrenFinal, Transform[] bottomLegs, Transform endEffector, Slider[] sliders)
+        public void Init(StewartPlatformFKConverter serviceConverter, Transform[] children, Transform[] childrenFinal, Transform[] bottomLegs, Transform endEffector, 
+            Slider[] sliders, Matrix<double> A_Matrix, Matrix<double> B_Matrix)
         {
             this.serviceConverter = serviceConverter;
             this.children = children;
@@ -35,6 +36,8 @@ namespace Assets.Scripts.StewartPlatform.logic
             this.bottomLegs = bottomLegs;
             this.endEffector = endEffector;
             this.sliders = sliders;
+            this.A_Matrix = A_Matrix;
+            this.B_Matrix = B_Matrix;
         }
        
         public void DoForwardKinematics()

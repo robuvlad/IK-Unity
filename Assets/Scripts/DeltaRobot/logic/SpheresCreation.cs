@@ -139,9 +139,10 @@ namespace Assets.Scripts.DeltaRobot.logic
             System.Numerics.Complex[] roots = FindRoots.Polynomial(coefs);
             if (float.IsNaN(serviceConverter.ConvertDoubleToFloat(roots[0].Real)) || float.IsNaN(serviceConverter.ConvertDoubleToFloat(roots[0].Imaginary)))
             {
-                //Debug.Log("roots " + roots[0]);
+                //SINGULARITY APPEARANCE
                 singularityAppearance.ResolveSingularity(centresSpheres, thetas);
                 endEffectorPosition = singularityAppearance.endEffectorPosition;
+                //singularityAppearance.ResolveSingularity2(centresSpheres, thetas);
             }
             else
                 for (int i = 0; i < 2; i++)
@@ -155,7 +156,6 @@ namespace Assets.Scripts.DeltaRobot.logic
                             double y = roots[i].Real;
                             endEffectorPosition = new Vector3(serviceConverter.ConvertDoubleToFloat(x), serviceConverter.ConvertDoubleToFloat(z),
                                 serviceConverter.ConvertDoubleToFloat(y));
-                            //Debug.Log(x + "  " + y + "  " + z);
                         }
                     }
                 }

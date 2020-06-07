@@ -27,6 +27,11 @@ public class DeltaRobotFK : MonoBehaviour
 
     [Header("UI Slider")]
     [SerializeField] Slider[] sliders = null;                               // GUI sliders for changing the theta angles
+    [SerializeField] Text[] texts = null;                                   // GUI texts for theta values
+
+    [Header("Cubes Simulation")]
+    [SerializeField] GameObject cube = null;                                // create a set of cubes to simulate FK
+    [SerializeField] Transform pen = null;                                  // pen game object
 
     private double[] thetas;                                                // represent the angle for the 3 joints in degrees = INPUT
     private Vector3[] centresCircles;                                       // the centres of the invisibile circles
@@ -48,8 +53,9 @@ public class DeltaRobotFK : MonoBehaviour
     private LegsRotation legsRotation;                                      // rotate the whole legs
     private SpheresCreation circlesCreation;                                // creates the invisible spheres and resolve the final equation
 
-    private LineRenderer line;                                              // line renderer component used for drawing / painting simulation
-    private DrawingSimulation simulation;                                   // simulation of the FK algorithm
+    //private LineRenderer line;                                            // line renderer component used for drawing / painting simulation
+    //private DrawingSimulation simulation;                                 // simulation of the FK algorithm
+    private DrawingCubes simulation;
 
     void Start()
     {
@@ -57,14 +63,15 @@ public class DeltaRobotFK : MonoBehaviour
         serviceInitializer.InitTriangles();
         SetupRobotStructure();
         serviceInitializer.InitSliderValuesFK();
-
-        SetupLineRenderer();
+        setupSimulation();
+        //SetupLineRenderer();
     }
 
     void Update()
     {
         DoForwardKinematics();
-        simulation.DrawLines();
+        SetupUIValues();
+        //simulation.DrawLines();
     }
 
     private void Setup()
@@ -105,6 +112,14 @@ public class DeltaRobotFK : MonoBehaviour
         circlesCreation.InitStructureRobot(W_B, U_B, S_B, W_P, U_P, S_P);
     }
 
+    private void setupSimulation()
+    {
+        //simulation = ScriptableObject.CreateInstance<DrawingCubes>();
+        simulation = gameObject.AddComponent<DrawingCubes>();
+        simulation.Init(cube, pen);
+        simulation.DrawCubes();
+    }
+
     private void DoForwardKinematics()
     {
         UpdateThetaValues();
@@ -123,6 +138,13 @@ public class DeltaRobotFK : MonoBehaviour
         thetas[2] = sliders[2].value;
     }
 
+    private void SetupUIValues()
+    {
+        for(int i=0; i<NO_OF_LEGS; i++)
+            this.texts[i].text = (Math.Round(thetas[i] * 100.0f) / 100.0f).ToString();
+    }
+
+    /*
     private void SetupLineRenderer()
     {
         line = GetComponent<LineRenderer>();
@@ -130,7 +152,7 @@ public class DeltaRobotFK : MonoBehaviour
         line.endWidth = 0.05f;
 
         simulation = new DrawingSimulation(sliders, line, endEffector);
-    }
+    }*/
 
     private void OnDrawGizmos()
     {

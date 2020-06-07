@@ -25,6 +25,7 @@ public class DeltaRobotIK : MonoBehaviour
 
     [Header("UI Sliders")]
     [SerializeField] Slider[] sliders = null;                   // GUI sliders for changing the end effector position
+    [SerializeField] Button startButton = null;                 // press button to start simulation
 
     [Header ("Pick and Place Simulation")]
     [SerializeField] GameObject trajectory = null;
@@ -54,8 +55,6 @@ public class DeltaRobotIK : MonoBehaviour
         serviceInitializer.InitTriangles();
         SetupRobotStructure();
         serviceInitializer.InitSliderValuesIK();
-
-        simulation.Init(sliders, trajectory, endEffector);   
     }
 
     private void Update()
@@ -113,6 +112,12 @@ public class DeltaRobotIK : MonoBehaviour
         }
         legsRotation.RotateLegs(thetas, false);
         legsRotation.RotateParallelograms();
+    }
+
+    public void StartSimulation()
+    {
+        simulation.Init(sliders, trajectory, endEffector);
+        startButton.interactable = false;
     }
 
     private void SetLegsGenerator()

@@ -140,7 +140,7 @@ namespace Assets.Scripts.DeltaRobot.logic
             if (float.IsNaN(serviceConverter.ConvertDoubleToFloat(roots[0].Real)) || float.IsNaN(serviceConverter.ConvertDoubleToFloat(roots[0].Imaginary)))
             {
                 //SINGULARITY APPEARANCE
-                singularityAppearance.ResolveSingularity(centresSpheres, thetas);
+                singularityAppearance.ResolveSingularity(centresSpheres, thetas, endEffectorPosition);
                 endEffectorPosition = singularityAppearance.endEffectorPosition;
                 //singularityAppearance.ResolveSingularity2(centresSpheres, thetas);
             }

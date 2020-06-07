@@ -53,7 +53,15 @@ namespace Assets.Scripts.DeltaRobot.logic
             y_ = (a_ * f_ - c_ * d_) / (a_ * e_ - b_ * d_);
         }
 
-        public void ResolveSingularity(Vector3[] centresSpheres, double[] thetas)
+        public void ResolveSingularity(Vector3[] centresSpheres, double[] thetas, Vector3 endEffectorPos)
+        {
+            endEffectorPosition = endEffectorPos;
+            if (centresSpheres[0].z == centresSpheres[1].z && centresSpheres[1].z == centresSpheres[2].z) {
+                InvisibleSpheresSameHeight(centresSpheres, thetas);
+            }
+        }
+
+        private void InvisibleSpheresSameHeight(Vector3[] centresSpheres, double[] thetas)
         {
             InitSingularityVariables(centresSpheres, thetas);
 
@@ -65,7 +73,6 @@ namespace Assets.Scripts.DeltaRobot.logic
                 {
                     endEffectorPosition = new Vector3(serviceConverter.ConvertDoubleToFloat(x_), serviceConverter.ConvertDoubleToFloat(roots[i].Real),
                         serviceConverter.ConvertDoubleToFloat(y_));
-                    //Debug.Log("[singularity] " + endEffectorPosition);
                 }
             }
         }
